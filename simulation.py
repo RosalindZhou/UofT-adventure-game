@@ -36,7 +36,6 @@ class AdventureGameSimulation:
     _game: AdventureGame
     _events: EventList
 
-    # TODO: Copy/paste your code from A1, and make adjustments as needed
     def __init__(self, game_data_file: str, initial_location_id: int, commands: list[str]) -> None:
         """
         Initialize a new game simulation based on the given game data, that runs through the given commands.
@@ -47,12 +46,10 @@ class AdventureGameSimulation:
         """
         self._events = EventList()
         self._game = AdventureGame(game_data_file, initial_location_id)
-
-        # TODO: Add first event (initial location, no previous command)
-        # Hint: self._game.get_location() gives you back the current location
-
-        # TODO: Generate the remaining events based on the commands and initial location
-        # Hint: Call self.generate_events with the appropriate arguments
+        init_location = self._game.get_location()
+        first_event = Event(id_num=init_location.id_num, description=init_location.description)
+        self._events.add_event(first_event, None)
+        self.generate_events(commands, init_location)
 
     def generate_events(self, commands: list[str], current_location: Location) -> None:
         """
@@ -62,26 +59,25 @@ class AdventureGameSimulation:
         - len(commands) > 0
         - all commands in the given list are valid commands when starting from current_location
         """
-
-        # TODO: Complete this method as specified. For each command, generate the event and add it to self._events.
-        # Hint: current_location.available_commands[command] will return the next location ID
-        # which executing <command> while in <current_location_id> leads to
+        curr = current_location
+        for cmd in commands:
+            next_id = curr.available_commands[cmd]
+            self._game.current_location_id = next_id
+            curr = self._game.get_location()
+            new_event = Event(curr.id_num, curr.description)
+            self._events.add_event(new_event, cmd)
 
     def get_id_log(self) -> list[int]:
         """
         Get back a list of all location IDs in the order that they are visited within a game simulation
         that follows the given commands.
         """
-        # Note: We have completed this method for you. Do NOT modify it for A1.
-
         return self._events.get_id_log()
 
     def run(self) -> None:
         """
         Run the game simulation and log location descriptions.
         """
-        # Note: We have completed this method for you. Do NOT modify it for A1.
-
         current_event = self._events.first  # Start from the first event in the list
 
         while current_event:
