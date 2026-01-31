@@ -22,3 +22,104 @@
     }
   ]
 }
+
+{
+  "locations": [
+    {
+      "id": 301,
+      "name": "the Robarts Library 1F",
+      "brief_description": "You are on the first floor of the Robarts Library. There are elevators to the West, public computers to the East, bookshelves to the North, and an exit from the building to Huron Street to the South.",
+      "long_description": "You are on the first floor of the Robarts Library. Students pass by quietly, some heading toward the elevators while others sit at nearby computers. There are elevators to the West, public computers to the East, bookshelves to the North, and an exit from the building to Huron Street to the South.",
+      "available_commands": {
+        "exit": 3,
+        "go north": 304,
+        "go east": 303,
+        "go west": 302
+      },
+       "items": []
+    },
+    {
+      "id": 302,
+      "name": "elevators on 1F",
+      "brief_description": "You are standing in front of the elevators. You can take the elevator up to the second floor.",
+      "long_description": "You are standing in front of the elevators. A small sign shows that the current floor is the first floor. You can take the elevator up to the second floor.",
+      "available_commands": {
+        "go east": 301,
+        "up": 312
+      },
+       "items": []
+    },
+    {
+      "id": 303,
+      "name": "computer area",
+      "brief_description": "There are many computers. This is a great place to study.",
+      "long_description": "There are many computers. Many students are working in focused silence. This would be a great place to study—if you had time.",
+      "available_commands": {
+        "go west": 301
+      },
+       "items": []
+    },
+    {
+      "id": 304,
+      "name": "book shelves",
+      "brief_description": "Tall bookshelves surround you. This can be a great place to read books and learn more about how to improve your project.",
+      "long_description": "Tall bookshelves surround you. This can be a great place to read books and learn more about how to improve your project, but the deadline is creeping closer.",
+      "available_commands": {
+        "go south": 301
+      },
+       "items": []
+    },
+    {
+      "id": 312,
+      "name": "elevators on 2F",
+      "brief_description": "You are standing in front of the elevators. You can take the elevator down to the first floor.",
+      "long_description": "You are standing in front of the elevators. A small sign shows that the current floor is the second floor. You can take the elevator down to the first floor.",
+      "available_commands": {
+        "go east": 311,
+        "down": 302
+      },
+       "items": []
+    },
+    {
+      "id": 311,
+      "name": "the Robarts Library 2F",
+      "brief_description": "You are on the second floor of the Robarts Library. There are elevators to the West, a study room to the East, and a cafeteria to the North.",
+      "long_description": "You are on the second floor of the Robarts Library. This floor feels quieter and more focused. There are elevators to the West, a study room to the East, and a cafeteria to the North.",
+      "available_commands": {
+        "go north": 314,
+        "go east": 313,
+        "go west": 312
+      },
+       "items": []
+    },
+    {
+      "id": 313,
+      "name": "study room",
+      "brief_description": "You are now in the study room.",
+      "long_description": "You are now in the study room. It is very quiet. A few students are hunched over notebooks and laptops.",
+      "available_commands": {
+        "go west": 311
+      },
+       "items": []
+    },
+    {
+      "id": 314,
+      "name": "cafeteria",
+      "brief_description": "You are now in the cafeteria.",
+      "long_description": "You are now in the cafeteria. It smells faintly of coffee. A few abandoned cups sit on the tables. Something familiar catches your eye.",
+      "available_commands": {
+        "go south": 311
+      },
+      "items": ["lucky mug"]
+    }
+  ],
+  "items": [
+    {
+      "name": "lucky mug",
+      "description": "Your lucky U of T mug. It has been with you through every late-night study session, every major deadline, and every all-nighter.",
+      "start_position": 314,
+      "target_position": 104,
+      "target_points": 10
+    }
+  ]
+}
