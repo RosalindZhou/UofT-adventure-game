@@ -27,6 +27,16 @@
 {
   "locations": [
     {
+      "id": 3,
+      "name": "the Robarts Library",
+      "brief_description": "You are standing outside the Robarts Library. The entrance is right in front of you. You’ll need a T-Card to enter the building.",
+      "long_description": "You are standing outside the Robarts Library. Students walk in and out quietly, tapping their T-Cards at the entrance gates. You’ll need a T-Card to enter the building.",
+      "available_commands": {
+        "enter": 301
+      },
+       "items": []
+    },
+    {
       "id": 301,
       "name": "the Robarts Library 1F",
       "brief_description": "You are on the first floor of the Robarts Library. There are elevators to the West, public computers to the East,the bookshelves to the North, and an exit from the building to Huron Street to the South.",
@@ -121,6 +131,86 @@
       "start_position": 314,
       "target_position": 104,
       "target_points": 10
+    }
+  ]
+}
+{
+  "locations": [
+    {
+      "id": 1,
+      "name": "outside New College",
+      "brief_description": "You are standing in front of the New College building.",
+      "long_description": "Students are lounging on the nearby benches. Looking around, you see the main entrance leading into the building to the West.",
+      "available_commands": {
+        "go west": 502
+      },
+      "items": []
+    },
+    {
+      "id": 502,
+      "name": "New College Lobby",
+      "brief_description": "You are in the bustling New College Lobby.",
+      "long_description": "The lobby is busy with students. From here, you can head East to go back outside, South toward the Front Desk, or North to the Study Room.",
+      "available_commands": {
+        "go east": 11,
+        "go north": 501,
+        "go south": 503
+      },
+      "items": []
+    },
+    {
+      "id": 503,
+      "name": "the Front Desk",
+      "brief_description": "You are at the New College front desk.",
+      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm rooms, and to the South is the main Lobby.",
+      "available_commands": {
+        "go north": 502,
+        "go south": 504
+      },
+      "items": []
+    },
+    {
+      "id": 501,
+      "name": "your dorm room",
+      "brief_description": "This is your room in New College. It's messy but homey.",
+      "long_description": "You are in your dorm room. There's a desk with some items on it and a bed that hasn't been made in days. The only exit is South to the front desk area.",
+      "available_commands": {
+        "go south": 502
+      },
+      "items": ["t-card", "room key"]
+    },
+    {
+      "id": 504,
+      "name": "the Study Room",
+      "brief_description": "A quiet study room in New College.",
+      "long_description": "This study room is filled with carrels and heavy silence. It's a great place to work on a project. You see a computer terminal in the corner. To the North is the exit back to the Lobby.",
+      "available_commands": {
+        "go north": 503
+      },
+      "items": ["usb drive"]
+    }
+  ],
+  "items": [
+    {
+      "name": "t-card",
+      "description": "Your University of Toronto T-Card. Essential for library access.",
+      "start_position": 501,
+      "target_position": 3,
+      "target_points": 5
+    },
+    {
+      "name": "room key",
+      "description": "The key to your dorm room.",
+      "start_position": 501,
+      "target_position": 501,
+      "target_points": 2
+    },
+    {
+      "name": "usb drive",
+      "description": "A small black USB drive containing your important course project.",
+      "start_position": 504,
+      "target_position": 501,
+      "target_points": 15
     }
   ]
 }
