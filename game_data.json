@@ -26,6 +26,16 @@
 {
   "locations": [
     {
+      "id": 3,
+      "name": "the Robarts Library",
+      "brief_description": "You are standing outside the Robarts Library. The entrance is right in front of you. You’ll need a T-Card to enter the building.",
+      "long_description": "You are standing outside the Robarts Library. Students walk in and out quietly, tapping their T-Cards at the entrance gates. You’ll need a T-Card to enter the building.",
+      "available_commands": {
+        "enter": 301
+      },
+       "items": []
+    },
+    {
       "id": 301,
       "name": "the Robarts Library 1F",
       "brief_description": "You are on the first floor of the Robarts Library. There are elevators to the West, public computers to the East, bookshelves to the North, and an exit from the building to Huron Street to the South.",
@@ -116,7 +126,7 @@
   "items": [
     {
       "name": "lucky mug",
-      "description": "Your lucky U of T mug. It has been with you through every late-night study session, every major deadline, and every all-nighter.",
+      "description": "A familiar U of T mug catches your eye. You hesitate for a second before realizing it’s yours—the mug that has been with you through every late-night study session, every major deadline, and every all-nighter.",
       "start_position": 314,
       "target_position": 104,
       "target_points": 10
