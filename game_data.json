@@ -21,21 +21,113 @@
         "go south": 601
       },
        "items": []
-    }
-  ],
-  "items": [
+    },
     {
-      "name": "toonie",
-      "description": "There is a toonie on the ground. Someone must have dropped it.",
-      "start_position": 2,
-      "target_position": 613,
-      "target_points": 5
-    }
-  ]
-}
+      "id": 603,
+      "name": "Paul's Office",
+      "brief_description": "You are in the Paul's Office",
+      "long_description": "You are now in the Paul's Office, Paul is standing there. He loves soving confusion for his students.",
+      "available_commands": {
+        "go west": 601
+      },
+       "items": []
+    },
+    {
+      "id": 602,
+      "name": "elevator 1F",
+      "brief_description": "You are in the elevator 1F",
+      "long_description": "You are now in the elevator 1F, you can press the button and go to 2F",
+      "available_commands": {
+        "up": 612,
+        "go east": 601
+      },
+       "items": []
+    },
+    {
+      "id": 612,
+      "name": "elevator 2F",
+      "brief_description": "You are on the second floor of the Bahen Center. There are elevators to the West and a lab room",
 
-{
-  "locations": [
+      "long_description": "You are on the second floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. An empty lecture room. There is an elevator to the West and a locked Lab Room",
+      "available_commands": {
+        "go east": 611,
+        "down": 602
+      },
+      "items": []
+    },
+    {
+      "id": 613,
+      "name": "Lecture Room",
+      "brief_description": "You are in the lecture room",
+      "long_description": "You are now in the lecture room. There was a student who seemed to be looking for something.",
+      "available_commands": {
+        "go east": 611
+      },
+       "items": []
+    },
+    {
+      "id": 611,
+      "name": "Lab Room",
+      "brief_description": "You are now in front of lab room",
+      "long_description": "You are now in the lab room. It is locked. You must use key to enter this room",
+      "available_commands": {
+        "go west": 311
+      },
+       "items": ["a python reference book"]
+    },
+    {
+      "id": 101,
+      "name": "your dorm room",
+      "brief_description": "This is your room in New College. It's messy but homey.",
+      "long_description": "You are in your dorm room. There's a desk with some items on it and a bed that hasn't been made in days. The only exit is South to the front desk area.",
+      "available_commands": {
+        "go south": 102
+      },
+      "items": ["t-card", "room key"]
+    },
+    {
+      "id": 104,
+      "name": "the Study Room",
+      "brief_description": "A quiet study room in New College.",
+      "long_description": "This study room is filled with carrels and heavy silence. It's a great place to work on a project. You see a computer terminal in the corner. To the North is the exit back to the Lobby.",
+      "available_commands": {
+        "go north": 103
+      },
+      "items": ["usb drive"]
+    },
+    {
+      "id": 102,
+      "name": "New College Lobby",
+      "brief_description": "You are in the bustling New College Lobby.",
+      "long_description": "The lobby is busy with students. From here, you can head East to go back outside, South toward the Front Desk, or North to the Study Room.",
+      "available_commands": {
+        "go east": 1,
+        "go north": 101,
+        "go south": 103
+      },
+      "items": []
+    },
+    {
+      "id": 103,
+      "name": "the Front Desk",
+      "brief_description": "You are at the New College front desk.",
+      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm rooms, and to the South is the main Lobby.",
+      "available_commands": {
+        "go north": 102,
+        "go south": 104
+      },
+      "items": []
+    },
+    {
+      "id": 1,
+      "name": "outside New College",
+      "brief_description": "You are standing in front of the New College building.",
+      "long_description": "Students are lounging on the nearby benches. Looking around, you see the main entrance leading into the building to the West.",
+      "available_commands": {
+        "go west": 102
+      },
+      "items": []
+    },
     {
       "id": 3,
       "name": "the Robarts Library",
@@ -136,71 +228,19 @@
   ],
   "items": [
     {
-      "name": "lucky mug",
-      "description": "Your lucky U of T mug. It has been with you through every late-night study session, every major deadline, and every all-nighter.",
-      "start_position": 314,
-      "target_position": 101,
-      "target_points": 10
-    }
-  ]
-}
-{
-  "locations": [
-    {
-      "id": 1,
-      "name": "outside New College",
-      "brief_description": "You are standing in front of the New College building.",
-      "long_description": "Students are lounging on the nearby benches. Looking around, you see the main entrance leading into the building to the West.",
-      "available_commands": {
-        "go west": 102
-      },
-      "items": []
+      "name": "toonie",
+      "description": "There is a toonie on the ground. Someone must have dropped it.",
+      "start_position": 2,
+      "target_position": 613,
+      "target_points": 5
     },
     {
-      "id": 102,
-      "name": "New College Lobby",
-      "brief_description": "You are in the bustling New College Lobby.",
-      "long_description": "The lobby is busy with students. From here, you can head East to go back outside, South toward the Front Desk, or North to the Study Room.",
-      "available_commands": {
-        "go east": 1,
-        "go north": 101,
-        "go south": 103
-      },
-      "items": []
-    },
-    {
-      "id": 103,
-      "name": "the Front Desk",
-      "brief_description": "You are at the New College front desk.",
-      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm rooms, and to the South is the main Lobby.",
-      "available_commands": {
-        "go north": 102,
-        "go south": 104
-      },
-      "items": []
-    },
-    {
-      "id": 101,
-      "name": "your dorm room",
-      "brief_description": "This is your room in New College. It's messy but homey.",
-      "long_description": "You are in your dorm room. There's a desk with some items on it and a bed that hasn't been made in days. The only exit is South to the front desk area.",
-      "available_commands": {
-        "go south": 102
-      },
-      "items": ["t-card", "room key"]
-    },
-    {
-      "id": 104,
-      "name": "the Study Room",
-      "brief_description": "A quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. It's a great place to work on a project. You see a computer terminal in the corner. To the North is the exit back to the Lobby.",
-      "available_commands": {
-        "go north": 103
-      },
-      "items": ["usb drive"]
-    }
-  ],
-  "items": [
+    "name": "a python reference book",
+    "description": "There is a python reference book left by someone, maybe we can have a look?",
+    "start position": 611,
+    "target points": 5
+
+  },
     {
       "name": "t-card",
       "description": "Your University of Toronto T-Card. Essential for library access.",
@@ -221,78 +261,15 @@
       "start_position": 104,
       "target_position": 101,
       "target_points": 10
+    },
+    {
+      "name": "lucky mug",
+      "description": "Your lucky U of T mug. It has been with you through every late-night study session, every major deadline, and every all-nighter.",
+      "start_position": 314,
+      "target_position": 101,
+      "target_points": 10
     }
   ]
 }
-{
-  "locations": [
-    {
-      "id": 612,
-      "name": "elevator 2F",
-      "brief_description": "You are on the second floor of the Bahen Center. There are elevators to the West and a lab room",
 
-      "long_description": "You are on the second floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. An empty lecture room. There is an elevator to the West and a locked Lab Room",
-      "available_commands": {
-        "go east": 611,
-        "down": 602
-      },
-      "items": []
-    },
-    {
-      "id": 613,
-      "name": "Lecture Room",
-      "brief_description": "You are in the lecture room",
-      "long_description": "You are now in the lecture room. There was a student who seemed to be looking for something.",
-      "available_commands": {
-        "go east": 611
-      },
-       "items": []
-    },
-    {
-      "id": 611,
-      "name": "Lab Room",
-      "brief_description": "You are now in front of lab room",
-      "long_description": "You are now in the lab room. It is locked. You must use key to enter this room",
-      "available_commands": {
-        "go west": 311
-      },
-       "items": ["a python reference book"]
-    }
-  ],
-  "items": [
-    {
-    "name": "a python reference book",
-    "description": "There is a python reference book left by someone, maybe we can have a look?",
-    "start position": 611,
-    "target points": 5
 
-  }
-
-  ]
-}
-{
-  "locations": [
-    {
-      "id": 602,
-      "name": "elevator 1F",
-      "brief_description": "You are in the elevator 1F",
-      "long_description": "You are now in the elevator 1F, you can press the button and go to 2F",
-      "available_commands": {
-        "up": 612,
-        "go east": 601
-      },
-       "items": []
-    },
-    {
-      "id": 603,
-      "name": "Paul's Office",
-      "brief_description": "You are in the Paul's Office",
-      "long_description": "You are now in the Paul's Office, Paul is standing there. He loves soving confusion for his students.",
-      "available_commands": {
-        "go west": 601
-      },
-       "items": []
-    }
-  ]
-
-}
