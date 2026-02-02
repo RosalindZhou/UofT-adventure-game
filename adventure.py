@@ -90,8 +90,13 @@ class AdventureGame:
             locations[loc_data['id']] = location_obj
 
         items = []
-        # TODO: Add Item objects to the items list; your code should be structured similarly to the loop above
-        # YOUR CODE BELOW
+        for item_data in data["items"]:
+            item_obj = Item(item_data['name'], item_data['description'], item_data['start_position'],
+                            item_data['target_position'], item_data['target_points'])
+            items.append(item_obj)
+            start_loc_id = item_obj.start_position
+            if start_loc_id in locations and item_obj.name not in locations[start_loc_id].items:
+                locations[start_loc_id].items.append(item_obj.name)
 
         return locations, items
 
