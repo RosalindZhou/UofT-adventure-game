@@ -1,16 +1,26 @@
 {
   "locations": [
     {
-      "id": 600,
+      "id": 601,
       "name": "Bahen 1F",
       "brief_description": "You are on the first floor of the Bahen Center. There are elevators to the West, and an exit from the building to St. George street to the East. You see something shiny on the ground -- looks like a toonie?",
 
       "long_description": "You are on the first floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. You better not disturb them. One student is rushing down the corridor, wearing a heavy-looking backpack and carrying a textbook in their arms. There are elevators to the West, and an exit from the building to St. George street to the East.",
       "available_commands": {
         "go south": 77,
-        "go east": 601
+        "go east": 603
       },
       "items": ["toonie"]
+    },
+    {
+      "id": 6,
+      "name": "Bahen centre",
+      "brief_description": "You are standing in the front of Bahen centre",
+      "long_description": "You are standing in the front of Bahen centre",
+      "available_commands": {
+        "go south": 601
+      },
+       "items": []
     }
   ],
   "items": [
@@ -18,7 +28,7 @@
       "name": "toonie",
       "description": "There is a toonie on the ground. Someone must have dropped it.",
       "start_position": 2,
-      "target_position": 605,
+      "target_position": 613,
       "target_points": 5
     }
   ]
@@ -217,76 +227,72 @@
 {
   "locations": [
     {
-      "id": 603,
+      "id": 612,
       "name": "elevator 2F",
       "brief_description": "You are on the second floor of the Bahen Center. There are elevators to the West and a lab room",
 
-      "long_description": "You are on the second floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. You better not disturb them. There is an elevator to the West and a locked Lab Room",
+      "long_description": "You are on the second floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. An empty lecture room. There is an elevator to the West and a locked Lab Room",
       "available_commands": {
-        "go south": 604
+        "go east": 611,
+        "down": 602
       },
       "items": []
-    }
-  ]
-}
-{
-      "id": 604,
-      "name": "Lab Room",
-      "brief_description": "You are now in front of lab room.",
-      "long_description": "You are now in the Lab room. It is locked. You must use key to enter this room.",
-      "available_commands": {
-        "go south": 605,
-        "go north": 603
-      },
-       "items": []
-    }
-{
-      "id": 605,
+    },
+    {
+      "id": 613,
       "name": "Lecture Room",
       "brief_description": "You are in the lecture room",
       "long_description": "You are now in the lecture room. There was a student who seemed to be looking for something.",
       "available_commands": {
-        "go north": 604
+        "go east": 611
       },
        "items": []
-    }
-{
-      "id": 604,
+    },
+    {
+      "id": 611,
       "name": "Lab Room",
-      "brief_description": "",
-      "long_description": " ",
+      "brief_description": "You are now in front of lab room",
+      "long_description": "You are now in the lab room. It is locked. You must use key to enter this room",
       "available_commands": {
         "go west": 311
       },
-       "items": []
+       "items": ["a python reference book"]
     }
+  ],
+  "items": [
+    {
+    "name": "a python reference book",
+    "description": "There is a python reference book left by someone, maybe we can have a look?",
+    "start position": 611,
+    "target points": 5
+
+  }
+
+  ]
+}
 {
-      "id": 604,
-      "name": "Lab Room",
-      "brief_description": "",
-      "long_description": " ",
+  "locations": [
+    {
+      "id": 602,
+      "name": "elevator 1F",
+      "brief_description": "You are in the elevator 1F",
+      "long_description": "You are now in the elevator 1F, you can press the button and go to 2F",
       "available_commands": {
-        "go west": 311
+        "up": 612,
+        "go east": 601
+      },
+       "items": []
+    },
+    {
+      "id": 603,
+      "name": "Paul's Office",
+      "brief_description": "You are in the Paul's Office",
+      "long_description": "You are now in the Paul's Office, Paul is standing there. He loves soving confusion for his students.",
+      "available_commands": {
+        "go west": 601
       },
        "items": []
     }
-{
-      "id": 604,
-      "name": "Lab Room",
-      "brief_description": "",
-      "long_description": " ",
-      "available_commands": {
-        "go west": 311
-      },
-       "items": []
-    }
-{
-      "id": 604,
-      "name": "Lab Room",
-      "brief_description": "",
-      "long_description": " ",
-      "available_commands": {
-        "go west": 311
-      },
-       "items": []
-    }
+  ]
+
+}
