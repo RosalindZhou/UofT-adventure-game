@@ -104,10 +104,9 @@ class AdventureGame:
         """Return Location object associated with the provided location ID.
         If no ID is provided, return the Location object associated with the current location.
         """
-
-        # TODO: Complete this method as specified
-        # YOUR CODE BELOW
-
+        if loc_id is None:
+            loc_id = self.current_location_id
+        return self._locations[loc_id]
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
