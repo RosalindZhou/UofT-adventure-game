@@ -116,7 +116,7 @@
         "go north": 102,
         "go south": 104
       },
-      "items": []
+      "items": ["Spare room key"]
     },
     {
       "id": 1,
@@ -224,6 +224,38 @@
         "go south": 311
       },
       "items": ["lucky mug"]
+    },
+    {
+      "id": 4,
+      "name": "McLennan Physical Laboratories",
+      "brief_description": "You are in the front of MP",
+      "long_description": "You are now in the front of MP. Some classmates came out in a hurry as if they were discussing the hateful calculus.",
+      "available_commands": {
+        "": 000
+      },
+      "items": []
+
+    },
+    {
+      "id": 401,
+      "name": "Lecture Room 1",
+      "brief_description": "This is Lecture Room 1",
+      "long_description": "You are now in the Lecture Room 1, this room is empty.The blackboard still has the writing from the last class.",
+      "available_commands": {
+        "go north": 402,
+        "go west": 4
+      },
+      "items": ["left note"]
+    },
+    {
+      "id": 402,
+      "name": "Lecture Room 2",
+      "brief_description": "This is Lecture Room 2",
+      "long_description": "You are now in the Lecture Room 2,you see your classmates are listening attentively (actually just daydreaming)",
+      "available_commands": {
+        "go south": 401,
+      },
+      "items": ["laptop charger"]
     }
   ],
   "items": [
@@ -268,6 +300,26 @@
       "start_position": 314,
       "target_position": 101,
       "target_points": 10
+    },
+    {
+      "name": "laptop cahrger",
+      "description": "Your laptop charger.Your classmate was in a hurry to leave and mistakenly took your charging cable.You need to go back to dorm to find socket to charge your laptop.",
+      "start_position": 402,
+      "target_position": 101,
+      "target_points": 10
+    },
+    {
+      "name": "left note",
+      "description": "It's a left note by someone. TODO: handle this puzzle",
+      "start_position": 401,
+      "target_points": 5
+    },
+    {
+      "name": "spare room key",
+      "description": "It's a left note by someone ",
+      "start_position": 103,
+      "target_position": 101,
+      "target_points": 1
     }
   ]
 }
