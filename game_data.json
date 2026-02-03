@@ -316,7 +316,7 @@
     },
     {
       "name": "spare room key",
-      "description": "It's a left note by someone ",
+      "description": "It's a spare room key, you can use it to open your room.",
       "start_position": 103,
       "target_position": 101,
       "target_points": 1
