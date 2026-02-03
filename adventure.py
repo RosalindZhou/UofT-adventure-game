@@ -39,18 +39,15 @@ class AdventureGame:
 
     Representation Invariants:
         - self.current_location_id in self._locations
-        - self._visited <= set(self._locations.keys())
     """
 
     # Private Instance Attributes (do NOT remove these two attributes):
     #   - _locations: a mapping from location id to Location object.
     #                       This represents all the locations in the game.
     #   - _items: a list of Item objects, representing all items in the game.
-    #   - _visited: a set of integers, representing all the ids of locations that the player has visited.
 
     _locations: dict[int, Location]
     _items: list[Item]
-    _visited: set[int]
     current_location_id: int  # Suggested attribute, can be removed
     ongoing: bool  # Suggested attribute, can be removed
 
@@ -77,7 +74,6 @@ class AdventureGame:
         # Suggested attributes (you can remove and track these differently if you wish to do so):
         self.current_location_id = initial_location_id  # game begins at this location
         self.ongoing = True  # whether the game is ongoing
-        self._visited = set()
 
     @staticmethod
     def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item]]:
@@ -95,6 +91,8 @@ class AdventureGame:
             locations[loc_data['id']] = location_obj
 
         items = []
+        # TODO: Add Item objects to the items list; your code should be structured similarly to the loop above
+        # YOUR CODE BELOW
         for item_data in data["items"]:
             item_obj = Item(item_data['name'], item_data['description'], item_data['start_position'],
                             item_data['target_position'], item_data['target_points'])
@@ -102,13 +100,15 @@ class AdventureGame:
             start_loc_id = item_obj.start_position
             if start_loc_id in locations and item_obj.name not in locations[start_loc_id].items:
                 locations[start_loc_id].items.append(item_obj.name)
-
         return locations, items
 
     def get_location(self, loc_id: Optional[int] = None) -> Location:
         """Return Location object associated with the provided location ID.
         If no ID is provided, return the Location object associated with the current location.
         """
+
+        # TODO: Complete this method as specified
+        # YOUR CODE BELOW
         if loc_id is None:
             loc_id = self.current_location_id
         return self._locations[loc_id]
@@ -128,6 +128,8 @@ if __name__ == "__main__":
     game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "quit"]  # Regular menu options available at each location
     choice = None
+    start_loc = game.get_location()
+    game_log.add_event(Event(start_loc.id_num, start_loc.long_description))
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
     while game.ongoing:
@@ -143,11 +145,11 @@ if __name__ == "__main__":
         # TODO: Depending on whether or not it's been visited before,
         #  print either full description (first time visit) or brief description (every subsequent visit) of location
         # YOUR CODE HERE
-        if game.current_location_id in game._visited:
+        if location.visited:
             print(location.brief_description)
         else:
             print(location.long_description)
-            game.visited.add(game.current_location_id)
+            location.visited = True
 
         # Display possible actions at this location
         print("What to do? Choose from: look, inventory, score, log, quit")
@@ -169,14 +171,17 @@ if __name__ == "__main__":
             if choice == "log":
                 game_log.display_events()
             # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
-            if choice == "look":
+            elif choice == "look":
                 print(location.long_description)
+            elif choice == "quit":
+                game.ongoing = False
 
         else:
             # Handle non-menu actions
             result = location.available_commands[choice]
             game.current_location_id = result
-            game._visited.add(result)
+            new_loc = game.get_location()
+            game_log.add_event(Event(new_loc.id_num, new_loc.long_description), command=choice)
 
             # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
             # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game
