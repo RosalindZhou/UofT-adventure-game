@@ -89,7 +89,7 @@
       "id": 104,
       "name": "the Study Room",
       "brief_description": "A quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. It's a great place to work on a project. You see a computer terminal in the corner. To the North is the exit back to the Lobby.",
+      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner.You see your usb drive is left on the table",
       "available_commands": {
         "go north": 103
       },
@@ -111,7 +111,7 @@
       "id": 103,
       "name": "the Front Desk",
       "brief_description": "You are at the New College front desk.",
-      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm rooms, and to the South is the main Lobby.",
+      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm room, and to the South is the locked study room,you might need some passcode to open it.",
       "available_commands": {
         "go north": 102,
         "go south": 104
@@ -231,7 +231,7 @@
       "brief_description": "You are in the front of MP",
       "long_description": "You are now in the front of MP. Some classmates came out in a hurry as if they were discussing the hateful calculus.",
       "available_commands": {
-        "": 000
+        "go east": 401
       },
       "items": []
 
