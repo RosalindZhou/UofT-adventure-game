@@ -180,7 +180,7 @@ class NPC:
     location_id: int
     message: str
     required_item: str = ""
-    succes_message: str = ""
+    success_message: str = ""
     given_hint: bool = False
 
     def interact(self, player_inventory: list[str]) -> str:
