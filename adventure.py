@@ -135,7 +135,7 @@ if __name__ == "__main__":
     menu = ["look", "inventory", "score", "log", "quit"]  # Regular menu options available at each location
     choice = None
     start_loc = game.get_location()
-    game_log.add_event(Event(start_loc.id_num, start_loc.long_description))
+    game_log.add_event(Event(start_loc.id, start_loc.long_description))
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
     while game.ongoing:
