@@ -181,7 +181,7 @@
       "brief_description": "You are standing outside the Robarts Library. The entrance is right in front of you. You’ll need a T-Card to enter the building.",
       "long_description": "You are standing outside the Robarts Library. Students walk in and out quietly, tapping their T-Cards at the entrance gates. You’ll need a T-Card to enter the building.",
       "available_commands": {
-        "enter": 301,
+        "go north": 301,
         "go west": 10
       },
        "items": []
@@ -192,7 +192,7 @@
       "brief_description": "You are on the first floor of the Robarts Library. There are elevators to the West, public computers to the East,the bookshelves to the North, and an exit from the building to Huron Street to the South.",
       "long_description": "You are on the first floor of the Robarts Library. Students pass by quietly, some heading toward the elevators while others sit at nearby computers. There are elevators to the West, public computers to the East, bookshelves to the North, and an exit from the building to Huron Street to the South.",
       "available_commands": {
-        "exit": 3,
+        "go south": 3,
         "go north": 304,
         "go east": 303,
         "go west": 302
@@ -279,7 +279,7 @@
       "brief_description": "You are in the front of MP",
       "long_description": "You are now in the front of MP. Some classmates came out in a hurry as if they were discussing the hateful calculus.",
       "available_commands": {
-        "go east": 401，
+        "go east": 401,
         "go west": 12
       },
       "items": []
