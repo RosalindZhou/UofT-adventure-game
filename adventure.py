@@ -108,20 +108,22 @@ class AdventureGame:
             locations[loc_data['id']] = location_obj
 
         items = []
-        # TODO: Add Item objects to the items list; your code should be structured similarly to the loop above
+        # Add Item objects to the items list; your code should be structured similarly to the loop above
         # YOUR CODE BELOW
         for item_data in data["items"]:
+            points = item_data.get('target_points') or item_data.get('target points')
             item_obj = Item(item_data['name'], item_data['description'], item_data['start_position'],
-                            item_data['target_position'], item_data['target_points'])
+                            item_data['target_position'], points)
             items.append(item_obj)
+            if item_obj.start_position in locations:
+                if item_obj.name not in locations[item_obj.start_position].items:
+                    locations[item_obj.start_position].items.append(item_obj.name)
         return locations, items
 
     def get_location(self, loc_id: Optional[int] = None) -> Location:
         """Return Location object associated with the provided location ID.
         If no ID is provided, return the Location object associated with the current location.
         """
-
-        # TODO: Complete this method as specified
         # YOUR CODE BELOW
         if loc_id is None:
             loc_id = self.current_location_id
@@ -167,7 +169,7 @@ class AdventureGame:
         return None
 
     def take_item(self, item: str) -> str:
-        """Return a message about whether the item is available to to be taken."""
+        """Return a message about whether the item is available to be taken."""
         location = self.get_location()
         actual_name = self._find_in_location_items(location, item)
         if actual_name is None:
@@ -204,6 +206,7 @@ class AdventureGame:
         """Record one chronological event after executing command."""
         loc = self.get_location()
         game_log.add_event(Event(loc.id, loc.long_description), command=command)
+
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
@@ -310,9 +313,13 @@ if __name__ == "__main__":
         elif choice in location.available_commands:
             # Handle non-menu actions
             result = location.available_commands[choice]
-            game.current_location_id = result
-            game.moves_used += 1
-            game.log_action(game_log, choice)
+            if result == 3 and "t-card" not in [game.normalize_item_name(i) for i in game.inventory]:
+                print("\nSecurity: 'Sorry, student. You need to tap your T-Card to enter the library.'")
+                print("You realize you might have left it back in your dorm room.")
+            else:
+                game.current_location_id = result
+                game.moves_used += 1
+                game.log_action(game_log, choice)
         else:
             print("That was an invalid option, please try again.")
             continue
