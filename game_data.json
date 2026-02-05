@@ -53,7 +53,8 @@
       "brief_description": "You are standing in the front of Bahen centre",
       "long_description": "You are standing in the front of Bahen centre",
       "available_commands": {
-        "go south": 601
+        "go south": 601,
+        "go north": 12
       },
        "items": []
     },
@@ -169,7 +170,8 @@
       "brief_description": "You are standing in front of the New College building.",
       "long_description": "Students are lounging on the nearby benches. Looking around, you see the main entrance leading into the building to the West.",
       "available_commands": {
-        "go west": 102
+        "go west": 102,
+        "go east": 10
       },
       "items": []
     },
@@ -179,7 +181,8 @@
       "brief_description": "You are standing outside the Robarts Library. The entrance is right in front of you. You’ll need a T-Card to enter the building.",
       "long_description": "You are standing outside the Robarts Library. Students walk in and out quietly, tapping their T-Cards at the entrance gates. You’ll need a T-Card to enter the building.",
       "available_commands": {
-        "enter": 301
+        "enter": 301,
+        "go west": 10
       },
        "items": []
     },
@@ -276,7 +279,8 @@
       "brief_description": "You are in the front of MP",
       "long_description": "You are now in the front of MP. Some classmates came out in a hurry as if they were discussing the hateful calculus.",
       "available_commands": {
-        "go east": 401
+        "go east": 401，
+        "go west": 12
       },
       "items": []
 
