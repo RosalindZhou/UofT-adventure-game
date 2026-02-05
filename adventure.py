@@ -36,6 +36,8 @@ class AdventureGame:
     Instance Attributes:
         - self.current_location_id: the id of the player's current location in the game
         - ongoing: whether the game is ongoing
+        - inventory:
+        - score:
 
     Representation Invariants:
         - self.current_location_id in self._locations
@@ -50,6 +52,8 @@ class AdventureGame:
     _items: list[Item]
     current_location_id: int  # Suggested attribute, can be removed
     ongoing: bool  # Suggested attribute, can be removed
+    inventory: list[int]
+    score: int
 
     def __init__(self, game_data_file: str, initial_location_id: int) -> None:
         """
@@ -74,6 +78,8 @@ class AdventureGame:
         # Suggested attributes (you can remove and track these differently if you wish to do so):
         self.current_location_id = initial_location_id  # game begins at this location
         self.ongoing = True  # whether the game is ongoing
+        self.inventory = []
+        self.score = 0
 
     @staticmethod
     def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item]]:
@@ -175,6 +181,10 @@ if __name__ == "__main__":
                 print(location.long_description)
             elif choice == "quit":
                 game.ongoing = False
+            elif choice == "inventory":
+
+            elif choice == "score":
+
 
         else:
             # Handle non-menu actions
