@@ -1,6 +1,41 @@
 {
   "locations": [
     {
+      "id": 10,
+      "name": "St. George Street (North)",
+      "brief_description": "You are on the north end of St. George Street, near the library.",
+      "long_description": "To your West stands the massive, concrete form of Robarts Library. To your East stands the building of New college. The street continues South toward the heart of campus.",
+      "available_commands": {
+        "go south": 11,
+        "go west": 3,
+        "go east": 1
+      },
+      "items": []
+    },
+    {
+      "id": 11,
+      "name": "St. George Street (Middle)",
+      "brief_description": "You are in the middle of St. George Street.",
+      "long_description": "You are standing at the busy intersection in the middle of campus. To the West is the path leading to New College. You can see the street extending both North and South.",
+      "available_commands": {
+        "go north": 10,
+        "go south": 12,
+      },
+      "items": []
+    },
+    {
+      "id": 12,
+      "name": "St. George Street (South)",
+      "brief_description": "You are on the south end of St. George Street, near the labs.",
+      "long_description": "The atmosphere changes here as you get closer to the engineering and physics buildings. To the West is the Bahen Centre, and to the East is the McLennan Physical Laboratories (MP).",
+      "available_commands": {
+        "go north": 10,
+        "go west": 6,
+        "go east": 4
+    },
+      "items": []
+    },
+    {
       "id": 601,
       "name": "Bahen 1F",
       "brief_description": "You are on the first floor of the Bahen Center. There are elevators to the West, and an exit from the building to St. George street to the East. You see something shiny on the ground -- looks like a toonie?",
@@ -289,13 +324,6 @@
       "start_position": 101,
       "target_position": 3,
       "target_points": 5
-    },
-    {
-      "name": "room key",
-      "description": "The key to your dorm room.",
-      "start_position": 101,
-      "target_position": 101,
-      "target_points": 2
     },
     {
       "name": "usb drive",
