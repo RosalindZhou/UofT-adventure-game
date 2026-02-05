@@ -61,9 +61,10 @@ class AdventureGameSimulation:
         """
         curr = current_location
         for cmd in commands:
-            next_id = curr.available_commands[cmd]
-            self._game.current_location_id = next_id
-            curr = self._game.get_location()
+            if cmd in curr.available_commands:
+                next_id = curr.available_commands[cmd]
+                self._game.current_location_id = next_id
+                curr = self._game.get_location()
             new_event = Event(curr.id, curr.long_description)
             self._events.add_event(new_event, cmd)
 
@@ -100,8 +101,110 @@ if __name__ == "__main__":
     # })
 
     # TODO: Modify the code below to provide a walkthrough of commands needed to win and lose the game
-    win_walkthrough = []  # Create a list of all the commands needed to walk through your game to win it
-    expected_log = []  # Update this log list to include the IDs of all locations that would be visited
+    win_walkthrough = ["take t-card",  # 101
+                       "go South",  # 102
+                       "go South",  # 103
+                       "take spare room key",  # 103
+                       "go South",  # 104
+                       "pull",  # 105
+                       "take usb drive",  # 105
+                       "go north",  # 103
+                       "go north",  # 102
+                       "go east",  # 1
+                       "go east",  # 10
+                       "go east",  # 3
+                       "show/drop t-card"  # 3
+                       "go north",  # 301
+                       "go west",  # 302
+                       "up",  # 312
+                       "go east",  # 311
+                       "go north",  # 314
+                       "take lucky mug",  # 314
+                       "talk to The cafeteria staff",  # 314
+                       "go south",  # 311
+                       "go west",  # 312
+                       "down",  # 302
+                       "go east",  # 301
+                       "go north",  # 3
+                       "go west",  # 10
+                       "go south",  # 11
+                       "go south",  # 12
+                       "go east",  # 4
+                       "go east",  # 401
+                       "take left note",  # 401 some puzzle here
+                       "go north",  # 402
+                       "take laptop charger",  # 402
+                       "go south",  # 401
+                       "go west",  # 4
+                       "go west",  # 12
+                       "go north",  # 6
+                       "go north",  # 601
+                       "take toonie",  # 601
+                       "go east",  # 603
+                       "talk to Professor Paul He"  # 603
+                       "go west",  # 601
+                       "go west",  # 602
+                       "up",  # 612
+                       "go east",  # 611 some puzzle here
+                       "take a python reference book",  # 611
+                       "go west",  # 612
+                       "down",  # 602
+                       "go east",  # 601
+                       "go north",  # 6
+                       "go north",  # 12
+                       "go north",  # 11
+                       "go north",  # 10
+                       "go west",  # 1
+                       "go west",  # 102
+                       "go north",  # 101 some puzzle here
+                       ]  # Create a list of all the commands needed to walk through your game to win it
+    expected_log = [101,
+                    102,
+                    103,
+                    104,
+                    105,
+                    103,
+                    102,
+                    1,
+                    10,
+                    3,
+                    301,
+                    302,
+                    312,
+                    311,
+                    314,
+                    311,
+                    312,
+                    302,
+                    301,
+                    3,
+                    10,
+                    11,
+                    12,
+                    4,
+                    401,
+                    402,
+                    401,
+                    4,
+                    12,
+                    6,
+                    601,
+                    603,
+                    601,
+                    602,
+                    612,
+                    611,
+                    612,
+                    602,
+                    601,
+                    6,
+                    12,
+                    11,
+                    10,
+                    1,
+                    102,
+                    101
+                    ]  # Update this log list to include the IDs of all locations that would be visited
     # Uncomment the line below to test your walkthrough
     sim = AdventureGameSimulation('game_data.json', 1, win_walkthrough)
     assert expected_log == sim.get_id_log()
