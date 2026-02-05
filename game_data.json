@@ -359,5 +359,14 @@
       "target_position": 101,
       "target_points": 1
     }
+  ],
+  "NPC": [
+    {
+      "name": "Professor Paul He",
+      "location_id": ,
+      "start_position": 103,
+      "target_position": 101,
+      "target_points": 1
+    }
   ]
 }

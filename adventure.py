@@ -36,7 +36,7 @@ class AdventureGame:
     Instance Attributes:
         - self.current_location_id: the id of the player's current location in the game
         - ongoing: whether the game is ongoing
-        - inventory:
+        - inventory: TODO: handle these instance attributes
         - score:
 
     Representation Invariants:
