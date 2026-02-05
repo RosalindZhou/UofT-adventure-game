@@ -19,7 +19,7 @@
       "long_description": "You are standing at the busy intersection in the middle of campus. To the West is the path leading to New College. You can see the street extending both North and South.",
       "available_commands": {
         "go north": 10,
-        "go south": 12,
+        "go south": 12
       },
       "items": []
     },
@@ -119,7 +119,11 @@
       "available_commands": {
         "go south": 102
       },
-      "items": ["t-card", "room key"],
+      "items": [
+        "t-card",
+        "room key"
+      ]
+    },
     {
       "id": 104,
       "name": "the door of Study Room",
@@ -129,7 +133,7 @@
         "push": 104,
         "pull": 105
       },
-      "items": [],
+      "items": []
     },
     {
       "id": 105,
@@ -139,7 +143,7 @@
       "available_commands": {
         "go north": 103
       },
-      "items": ["usb drive"],
+      "items": ["usb drive"]
     },
     {
       "id": 102,
@@ -302,7 +306,7 @@
       "brief_description": "This is Lecture Room 2",
       "long_description": "You are now in the Lecture Room 2,you see your classmates are listening attentively (actually just daydreaming)",
       "available_commands": {
-        "go south": 401,
+        "go south": 401
       },
       "items": ["laptop charger"]
     }
@@ -367,10 +371,28 @@
   "NPC": [
     {
       "name": "Professor Paul He",
-      "location_id": ,
-      "start_position": 103,
-      "target_position": 101,
-      "target_points": 1
+      "location_id": 603,
+      "message": "",
+      "required_item": "",
+      "succes_message": "",
+      "given_hint": False
+    },
+    {
+      "name": "The cafeteria staff",
+      "location_id": 603,
+      "message": "",
+      "required_item": "",
+      "succes_message": "",
+      "given_hint": False
+    },
+    {
+      "name": "",
+      "location_id": 603,
+      "message": "",
+      "required_item": "",
+      "succes_message": "",
+      "given_hint": False
     }
+
   ]
 }
