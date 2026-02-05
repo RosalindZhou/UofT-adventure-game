@@ -83,17 +83,27 @@
       "available_commands": {
         "go south": 102
       },
-      "items": ["t-card", "room key"]
-    },
+      "items": ["t-card", "room key"],
     {
       "id": 104,
+      "name": "the door of Study Room",
+      "brief_description": "It's a Study room in your dorm, however, you cannot enter it even if you push very hard.",
+      "long_description": "You can see an upside-down note sticking on the door that says 'push'",
+      "available_commands": {
+        "push": 104,
+        "pull": 105
+      },
+      "items": [],
+    },
+    {
+      "id": 105,
       "name": "the Study Room",
-      "brief_description": "A quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner.You see your usb drive is left on the table",
+      "brief_description": "You enter the quiet study room in New College.",
+      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive is left on the table",
       "available_commands": {
         "go north": 103
       },
-      "items": ["usb drive"]
+      "items": ["usb drive"],
     },
     {
       "id": 102,
@@ -111,7 +121,7 @@
       "id": 103,
       "name": "the Front Desk",
       "brief_description": "You are at the New College front desk.",
-      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm room, and to the South is the locked study room,you might need some passcode to open it.",
+      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm room, and to the South is the study room.",
       "available_commands": {
         "go north": 102,
         "go south": 104
@@ -323,5 +333,3 @@
     }
   ]
 }
-
-
