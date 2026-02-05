@@ -50,7 +50,7 @@ class Location:
     long_description: str
     available_commands: dict[str, int]
     items: list[str]
-    visited: bool
+    visited: bool = False
 
     def look(self) -> str:
         """Return the current location's long description."""
