@@ -372,23 +372,23 @@
     {
       "name": "Professor Paul He",
       "location_id": 603,
-      "message": "",
-      "required_item": "",
-      "succes_message": "",
+      "message": "If you have any confusion for your code you can use python reference book. That usually works. ",
+      "required_item": "toonie",
+      "succes_message": "Oh thank you, but why you give me a coin?",
       "given_hint": False
     },
     {
       "name": "The cafeteria staff",
       "location_id": 603,
-      "message": "",
-      "required_item": "",
-      "succes_message": "",
+      "message": "Today, a cup of coffee costs 5 yuan. If you bring your own cup, it's free!",
+      "required_item": "lucky mug",
+      "succes_message": "Oh! You brought your own cup! To show our appreciation for the environmental-conscious students, we can offer you a free cup of coffee.",
       "given_hint": False
     },
     {
-      "name": "",
-      "location_id": 603,
-      "message": "",
+      "name": "Your classmates",
+      "location_id": 402,
+      "message": "Sorry, I was in a hurry when leaving and picked up the wrong charging cable for you. Go and get it from the backpack over there.",
       "required_item": "",
       "succes_message": "",
       "given_hint": False
