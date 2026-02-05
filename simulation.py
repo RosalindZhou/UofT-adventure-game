@@ -47,7 +47,7 @@ class AdventureGameSimulation:
         self._events = EventList()
         self._game = AdventureGame(game_data_file, initial_location_id)
         init_location = self._game.get_location()
-        first_event = Event(id_num=init_location.id_num, description=init_location.description)
+        first_event = Event(init_location.id, init_location.long_description)
         self._events.add_event(first_event, None)
         self.generate_events(commands, init_location)
 
@@ -64,7 +64,7 @@ class AdventureGameSimulation:
             next_id = curr.available_commands[cmd]
             self._game.current_location_id = next_id
             curr = self._game.get_location()
-            new_event = Event(curr.id_num, curr.description)
+            new_event = Event(curr.id, curr.long_description)
             self._events.add_event(new_event, cmd)
 
     def get_id_log(self) -> list[int]:
