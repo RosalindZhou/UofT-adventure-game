@@ -134,8 +134,6 @@ if __name__ == "__main__":
     game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "quit"]  # Regular menu options available at each location
     choice = None
-    start_loc = game.get_location()
-    game_log.add_event(Event(start_loc.id, start_loc.long_description))
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
     while game.ongoing:
@@ -146,11 +144,10 @@ if __name__ == "__main__":
 
         # TODO: Add new Event to game log to represent current game location
         #  Note that the <choice> variable should be the command which led to this event
-        # YOUR CODE HERE
+        game_log.add_event(Event(location.id, location.long_description), command=choice)
 
         # TODO: Depending on whether or not it's been visited before,
         #  print either full description (first time visit) or brief description (every subsequent visit) of location
-        # YOUR CODE HERE
         if location.visited:
             print(location.brief_description)
         else:
@@ -191,7 +188,6 @@ if __name__ == "__main__":
             result = location.available_commands[choice]
             game.current_location_id = result
             new_loc = game.get_location()
-            game_log.add_event(Event(new_loc.id_num, new_loc.long_description), command=choice)
 
             # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
             # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game
