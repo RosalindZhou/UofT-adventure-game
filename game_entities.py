@@ -56,6 +56,8 @@ class Location:
         """Return the current location's long description."""
         return self.long_description
 
+    # TODO: handle print available_commands function
+
 
 @dataclass
 class Item:
@@ -178,6 +180,7 @@ class NPC:
     location_id: int
     message: str
     required_item: str = ""
+    succes_message: str = ""
     given_hint: bool = False
 
     def interact(self, player_inventory: list[str]) -> str:
