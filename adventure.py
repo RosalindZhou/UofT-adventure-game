@@ -114,6 +114,13 @@ class AdventureGame:
             item_obj = Item(item_data['name'], item_data['description'], item_data['start_position'],
                             item_data['target_position'], item_data['target_points'])
             items.append(item_obj)
+        all_loc_items = set()
+        for loc in locations.values():
+            all_loc_items.update(AdventureGame.normalize_item_name(x) for x in loc.items)
+
+        for item in items:
+            if AdventureGame.normalize_item_name(item.name) not in all_loc_items:
+                print(f"The item '{item.name}' doesn't exist.")
         return locations, items
 
     def get_location(self, loc_id: Optional[int] = None) -> Location:
@@ -122,7 +129,6 @@ class AdventureGame:
         """
 
         # TODO: Complete this method as specified
-        # YOUR CODE BELOW
         if loc_id is None:
             loc_id = self.current_location_id
         return self._locations[loc_id]
@@ -168,10 +174,13 @@ class AdventureGame:
 
     def take_item(self, item: str) -> str:
         """Return a message about whether the item is available to to be taken."""
+        item = item.strip()
+        if item == "":
+            return "You did not enter an item."
         location = self.get_location()
         actual_name = self._find_in_location_items(location, item)
         if actual_name is None:
-            return f"The {item}' isn't here."
+            return f"The {item} isn't here."
         location.items.remove(actual_name)
         self.inventory.append(actual_name)
         self.moves_used += 1
@@ -179,6 +188,9 @@ class AdventureGame:
 
     def drop_item(self, item: str) -> str:
         """Return whether you successfully dropped the item at the current position."""
+        item = item.strip()
+        if item == "":
+            return "You did not enter an item."
         location = self.get_location()
         actual_name = self._find_in_inventory(item)
         if actual_name is None:
@@ -204,6 +216,17 @@ class AdventureGame:
         """Record one chronological event after executing command."""
         loc = self.get_location()
         game_log.add_event(Event(loc.id, loc.long_description), command=command)
+
+    def check_end(self) -> Optional[str]:
+        """Return a message if the game ends, otherwise return None."""
+        if self.game_lost():
+            self.ongoing = False
+            return "Time's up! You ran out of moves. The game is over. Take another try."
+        if self.game_won():
+            self.ongoing = False
+            return ("You found all the missing items and brought them back to your dorm!\n"
+                    "You submitted the project just in time. You win!")
+        return None
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
@@ -247,35 +270,23 @@ if __name__ == "__main__":
         # Validate choice
         choice = input("\nEnter action: ").lower().strip()
         if choice.startswith("take "):
-            item = choice[5:].strip()
+            item = choice[5:]
             message = game.take_item(item)
             print(message)
             game.log_action(game_log, choice)
-
-            if game.game_lost():
-                print("Time's up! You ran out of moves. The game is over. Take another try.")
-                game.ongoing = False
-            elif game.game_won():
-                print("You found all the missing items and brought them back to your dorm!")
-                print("You submit the project just in time. You win!")
-                game.ongoing = False
-
+            end_message = game.check_end()
+            if end_message is not None:
+                print(end_message)
             continue
 
         elif choice.startswith("drop "):
-            item = choice[5:].strip()
+            item = choice[5:]
             message = game.drop_item(item)
             print(message)
             game.log_action(game_log, choice)
-
-            if game.game_lost():
-                print("Time's up! You ran out of moves. The game is over. Take another try.")
-                game.ongoing = False
-            elif game.game_won():
-                print("You found all the missing items and brought them back to your dorm!")
-                print("You submit the project just in time. You win!")
-                game.ongoing = False
-
+            end_message = game.check_end()
+            if end_message is not None:
+                print(end_message)
             continue
 
         while choice not in location.available_commands and choice not in menu:
@@ -292,10 +303,8 @@ if __name__ == "__main__":
             # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
             elif choice == "look":
                 print(location.long_description)
-                game.log_action(game_log, choice)
             elif choice == "quit":
                 game.ongoing = False
-                game.log_action(game_log, choice)
             elif choice == "inventory":
                 if game.inventory == []:
                     print("Your inventory is empty.")
@@ -303,7 +312,6 @@ if __name__ == "__main__":
                     print("You are carrying:")
                     for item in game.inventory:
                         print("-", item)
-                game.log_action(game_log, choice)
             elif choice == "score":
                 print("Your current score is", game.score)
                 game.log_action(game_log, choice)
@@ -316,13 +324,9 @@ if __name__ == "__main__":
         else:
             print("That was an invalid option, please try again.")
             continue
-        if game.game_lost():
-            print("Time's up! You ran out of moves. The game is over. Take another try.")
-            game.ongoing = False
-        elif game.game_won():
-            print("You found all the missing items and brought them back to your dorm!")
-            print("You submit the project just in time. You win!")
-            game.ongoing = False
+        end_message = game.check_end()
+        if end_message is not None:
+            print(end_message)
 
             # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
             # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game
