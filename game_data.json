@@ -116,7 +116,7 @@
         "go north": 102,
         "go south": 104
       },
-      "items": ["Spare room key"]
+      "items": ["spare room key"]
     },
     {
       "id": 1,
@@ -262,17 +262,17 @@
     {
       "name": "toonie",
       "description": "There is a toonie on the ground. Someone must have dropped it.",
-      "start_position": 2,
+      "start_position": 601,
       "target_position": 613,
       "target_points": 5
     },
     {
-    "name": "a python reference book",
-    "description": "There is a python reference book left by someone, maybe we can have a look?",
-    "start position": 611,
-    "target points": 5
-
-  },
+      "name": "a python reference book",
+      "description": "There is a python reference book left by someone, maybe we can have a look?",
+      "start_position": 611,
+      "target_position": 0,
+      "target points": 5
+    },
     {
       "name": "t-card",
       "description": "Your University of Toronto T-Card. Essential for library access.",
@@ -302,7 +302,7 @@
       "target_points": 10
     },
     {
-      "name": "laptop cahrger",
+      "name": "laptop charger",
       "description": "Your laptop charger.Your classmate was in a hurry to leave and mistakenly took your charging cable.You need to go back to dorm to find socket to charge your laptop.",
       "start_position": 402,
       "target_position": 101,
