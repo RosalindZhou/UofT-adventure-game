@@ -34,12 +34,16 @@ class AdventureGame:
     """A text adventure game class storing all location, item and map data.
 
     Instance Attributes:
-        - player: TODO：
-        - ongoing: whether the game is ongoing
-        - deposited: a set of normalized item names that have been correctly placed
+        - player: The Player object representing the current state of the user.
+        - ongoing: Whether the game is ongoing; False if the player has won or lost.
+        - deposited: A set of normalized item names that have been correctly placed 
+          in the target location to win the game.
 
     Representation Invariants:
-        - TODO：
+        - self.max_moves > 0
+        - all(item.name in [i.name for i in self._items] for item in self.player.inventory)
+        - self.player.current_location_id in self._locations
+        - 0 <= self.player.moves_made <= self.max_moves
     """
 
     # Private Instance Attributes (do NOT remove these two attributes):
