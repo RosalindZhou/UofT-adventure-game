@@ -235,6 +235,13 @@ class AdventureGame:
         else:
             return header + loc.brief_description
 
+    def update_item_description(self, item_name: str, new_description: str) -> None:
+        """Find the item and modify its description"""
+        item_obj = self.get_item(item_name)
+        if item_obj:
+            item_obj.description = new_description
+
+
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
