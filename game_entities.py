@@ -57,8 +57,6 @@ class Location:
         """Return the current location's long description."""
         return self.long_description
 
-    # TODO: handle print available_commands function
-
 
 @dataclass
 class Item:
