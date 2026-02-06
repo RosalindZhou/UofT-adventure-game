@@ -191,10 +191,10 @@ class NPC:
         if not self.required_item or self.required_item in player_inventory:
             return f"{self.name}: {self.message}"
         return f"{self.name} seems to waiting for some item..."
-# Note: Other entities you may want to add, depending on your game plan:
-# - Puzzle class to represent special locations (could inherit from Location class if it seems suitable)
-# - Player class
-# etc.
+    # Note: Other entities you may want to add, depending on your game plan:
+    # - Puzzle class to represent special locations (could inherit from Location class if it seems suitable)
+    # - Player class
+    # etc.
 
 
 if __name__ == "__main__":

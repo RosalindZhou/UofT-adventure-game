@@ -19,9 +19,9 @@ This file is Copyright (c) 2026 CSC111 Teaching Team
 """
 from __future__ import annotations
 import json
-from typing import Optional, ClassVar
+from typing import Optional
 
-from game_entities import Location, Item, Player, NPC
+from game_entities import Location, Item, NPC
 from event_logger import Event, EventList
 
 
@@ -34,10 +34,13 @@ class AdventureGame:
     """A text adventure game class storing all location, item and map data.
 
     Instance Attributes:
-        - player:
+        - self.current_location_id: the id of the player's current location in the game
         - ongoing: whether the game is ongoing
-        - deposited: a set of normalized item names that have been correctly placed
+        - inventory: a list of item names currently held by the player
+        - score: the player's current score based on deposited items
+        - moves_used: the number of moves the player has made
         - max_moves: the maximum number of moves allowed before losing
+        - deposited: a set of normalized item names that have been correctly placed
         - required items: a list of item which requires to win
 
     Representation Invariants:
@@ -53,13 +56,14 @@ class AdventureGame:
     _locations: dict[int, Location]
     _items: list[Item]
     _npcs: list[NPC]
-
-    player: Player
-    ongoing: bool
+    current_location_id: int  # Suggested attribute, can be removed
+    ongoing: bool  # Suggested attribute, can be removed
+    inventory: list[str]
+    score: int
+    moves_used: int
+    max_moves: int
     deposited: set[str]
-
-    max_moves: ClassVar[int] = 100
-    required_items: ClassVar[set[str]] = {"usb drive", "laptop charger", "lucky mug", "a python reference book"}
+    required_items: set[str] = {"usb drive", "laptop charger", "lucky mug"}
 
     def __init__(self, game_data_file: str, initial_location_id: int) -> None:
         """
@@ -77,10 +81,18 @@ class AdventureGame:
         # Requirements:
         # 1. Make sure the Location class is used to represent each location.
         # 2. Make sure the Item class is used to represent each item.
+
+        # Suggested helper method (you can remove and load these differently if you wish to do so):
         self._locations, self._items, self._npcs = self._load_game_data(game_data_file)
-        self.player = Player(initial_location_id, [], 0, self.max_moves, initial_location_id, game_data_file)
-        self.deposited = set()
+
+        # Suggested attributes (you can remove and track these differently if you wish to do so):
+        self.current_location_id = initial_location_id  # game begins at this location
         self.ongoing = True  # whether the game is ongoing
+        self.inventory = []
+        self.score = 0
+        self.moves_used = 0
+        self.max_moves = 200
+        self.deposited = set()
 
     @staticmethod
     def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item], list[NPC]]:
@@ -113,10 +125,9 @@ class AdventureGame:
             if AdventureGame.normalize_item_name(itm.name) not in all_loc_items:
                 print(f"The item '{itm.name}' doesn't exist.")
         npcs = []
-        for npc_data in data.get("NPC", []):
-            npc = NPC(npc_data["name"], npc_data["location_id"], npc_data.get("message", ""),
-                      npc_data.get("required_item", ""), npc_data.get("success_message", ""),
-                      npc_data.get("given_hint", False))
+        for npc_data in data['NPC']:
+            npc = NPC(npc_data['name'], npc_data['location_id'], npc_data.get['message'],
+                      npc_data['required_item'], npc_data['success_message'], npc_data['given_hint'])
             npcs.append(npc)
 
         return locations, items, npcs
@@ -126,27 +137,16 @@ class AdventureGame:
         If no ID is provided, return the Location object associated with the current location.
         """
         if loc_id is None:
-            loc_id = self.player.current_location
+            loc_id = self.current_location_id
         return self._locations[loc_id]
 
     def game_lost(self) -> bool:
         """Return whether the player has used up the maximum number of moves."""
-        return self.player.moves_left <= 0
+        return self.moves_used >= self.max_moves
 
     def game_won(self) -> bool:
         """Return whether all required items have been deposited at the target position."""
-        return self.required_items.issubset(self.deposited) and self.player.current_location == 101
-
-    def check_end(self) -> Optional[str]:
-        """Return a message if the game ends, otherwise return None."""
-        if self.game_lost():
-            self.ongoing = False
-            return "Time's up! You ran out of moves. The game is over. Take another try."
-        if self.game_won():
-            self.ongoing = False
-            return ("You found all the missing items and brought them back to your dorm!\n"
-                    "You submitted the project just in time. You win!")
-        return None
+        return self.required_items.issubset(self.deposited) and self.current_location_id == 101
 
     @staticmethod
     def normalize_item_name(s: str) -> str:
@@ -174,7 +174,7 @@ class AdventureGame:
     def _find_in_inventory(self, inv_item: str) -> Optional[str]:
         """Return the actual item name stored in inventory matching user input, or None."""
         target = self.normalize_item_name(inv_item)
-        for name in self.player.inventory:
+        for name in self.inventory:
             if self.normalize_item_name(name) == target:
                 return name
         return None
@@ -189,8 +189,8 @@ class AdventureGame:
         if actual_name is None:
             return f"The {avail_item} isn't here."
         curr_location.items.remove(actual_name)
-        self.player.inventory.append(actual_name)
-        self.player.moves_left -= 1
+        self.inventory.append(actual_name)
+        self.moves_used += 1
         return f"You got the {actual_name}!"
 
     def drop_item(self, avail_item: str) -> str:
@@ -203,15 +203,15 @@ class AdventureGame:
         if actual_name is None:
             return f"You can't drop '{avail_item}'. You don't have it yet."
 
-        self.player.inventory.remove(actual_name)
+        self.inventory.remove(actual_name)
         curr_location.items.append(actual_name)
-        self.player.moves_left -= 1
+        self.moves_used += 1
 
         item_obj = self.get_item(actual_name)
-        if item_obj is not None and curr_location.id == item_obj.target_position:
+        if item_obj is not None and location.id == item_obj.target_position:
             norm = self.normalize_item_name(actual_name)
             if norm not in self.deposited:
-                self.player.score += item_obj.target_points
+                self.score += item_obj.target_points
                 self.deposited.add(norm)
                 return f"You dropped {actual_name} at the right place! +{item_obj.target_points} points."
             else:
@@ -224,14 +224,26 @@ class AdventureGame:
         loc = self.get_location()
         curr_log.add_event(Event(loc.id, loc.long_description), command=cmd)
 
+    def check_end(self) -> Optional[str]:
+        """Return a message if the game ends, otherwise return None."""
+        if self.game_lost():
+            self.ongoing = False
+            return "Time's up! You ran out of moves. The game is over. Take another try."
+        if self.game_won():
+            self.ongoing = False
+            return ("You found all the missing items and brought them back to your dorm!\n"
+                    "You submitted the project just in time. You win!")
+        return None
+
     def location_format(self, loc: Location, visited: bool) -> str:
         """Return a string representation of the location's description based on whether
         it has been visited before.
         """
         header = f"LOCATION {loc.id}\n"
         if visited:
+            return header + loc.long_description
+        else:
             return header + loc.brief_description
-        return header + loc.long_description
 
     def update_item_description(self, item_name: str, new_description: str) -> None:
         """Find the item and modify its description"""
@@ -239,150 +251,40 @@ class AdventureGame:
         if item_obj:
             item_obj.description = new_description
 
-    def _reset_to_start(self) -> None:
-        """Reset this game object to a fresh start state (same world, same start location)."""
-        self._locations, self._items, self._npcs = self._load_game_data(self.player.data_file)
-        self.player.current_location = self.player.start_location
-        self.player.inventory = []
-        self.player.score = 0
-        self.player.moves_left = self.max_moves
-        self.deposited = set()
-        self.ongoing = True
-
-    def _execute_command_no_log(self, cmd: str) -> None:
-        """Execute one command to update game state, without printing/logging.
-
-        Assumes cmd is already normalized (lower/strip).
-        Ignores menu commands (look/inventory/score/log/quit).
-        """
-        loc = self.get_location()
-
-        # movement
-        if cmd in loc.available_commands:
-            self.player.move(loc.available_commands[cmd])
-            return
-
-        # take/drop
-        if cmd.startswith("take "):
-            self.take_item(cmd[5:].strip())
-            return
-        if cmd.startswith("drop "):
-            self.drop_item(cmd[5:].strip())
-            return
-        if cmd.startswith("talk to "):
-            self.talk_to(cmd[8:].strip())
-            return
-        if cmd in {"look", "inventory", "score", "log", "quit"}:
-            return
-        raise ValueError(f"Invalid command in replay: {cmd!r}")
-
-    def undo(self, curr_game_log: EventList) -> str:
-        """Undo the most recent action by replaying the whole game log except the last command."""
-        if curr_game_log.is_empty() or curr_game_log.first == curr_game_log.last:
-            return "Nothing to undo."
-        prev_event = curr_game_log.last.prev
-        cmd_to_undo = prev_event.next_command
-        curr_game_log.remove_last_event()
-        commands: list[str] = []
-        curr = curr_game_log.first
-        while curr is not None and curr.next is not None:
-            if curr.next_command is not None:
-                commands.append(curr.next_command.lower().strip())
-            curr = curr.next
-        self._reset_to_start()
-        for c in commands:
-            self._execute_command_no_log(c)
-        return f"Undone: {cmd_to_undo}. You are now at LOCATION {self.player.current_location}."
-
-    def _revert_item_state(self, cmd: str) -> None:
-        """Helper to reverse changes to inventory and score based on the command."""
-        if cmd.startswith("take "):
-            item_name = cmd[5:].strip()
-            actual_name = self._find_in_inventory(item_name)
-            if actual_name:
-                self.player.inventory.remove(actual_name)
-                self.get_location().items.append(actual_name)
-
-        elif cmd.startswith("drop "):
-            item_name = cmd[5:].strip()
-            actual_name = self._find_in_location_items(self.get_location(), item_name)
-            if actual_name:
-                self._reverse_drop(actual_name)
-
-    def _reverse_drop(self, actual_name: str) -> None:
-        """Helper to specifically reverse a drop action."""
-        self.get_location().items.remove(actual_name)
-        self.player.inventory.append(actual_name)
-        norm_name = self.normalize_item_name(actual_name)
-        if norm_name in self.deposited:
-            item_obj = self.get_item(actual_name)
-            if item_obj:
-                self.player.score -= item_obj.target_points
-                self.deposited.remove(norm_name)
-
     def save_game(self, filename: str = "savegame.json") -> str:
-        """Save full game state (player + locations items/visited + NPC hints)."""
+        """Serializes the core game state into a JSON file."""
         state = {
-            "player": {
-                "current_location": self.player.current_location,
-                "inventory": self.player.inventory,
-                "score": self.player.score,
-                "moves_left": self.player.moves_left,
-                "start_location": self.player.start_location,
-                "data_file": self.player.data_file
-            },
+            "current_location_id": self.current_location_id,
+            "inventory": self.inventory,
+            "score": self.score,
+            "moves_used": self.moves_used,
             "deposited": list(self.deposited),
-            "ongoing": self.ongoing,
-            "locations": {
-                str(loc_id): {
-                    "items": loc.items,
-                    "visited": loc.visited
-                }
-                for loc_id, loc in self._locations.items()
-            },
-            "npcs": [
-                {"name": npc.name, "given_hint": npc.given_hint}
-                for npc in self._npcs
-            ]
+            "ongoing": self.ongoing
         }
-        with open(filename, "w") as f:
+        with open(filename, 'w') as f:
             json.dump(state, f)
-        return f"Game progress saved to {filename}."
+        return "Game progress saved to savegame.json."
 
     def restore_game(self, filename: str = "savegame.json") -> str:
-        """Restore full game state from a save file."""
+        """Loads and overwrites current game attributes from a save file."""
         try:
-            with open(filename, "r") as f:
+            with open(filename, 'r') as f:
                 state = json.load(f)
+            self.current_location_id = state["current_location_id"]
+            self.inventory = state["inventory"]
+            self.score = state["score"]
+            self.moves_used = state["moves_used"]
+            self.deposited = set(state["deposited"])
+            self.ongoing = state["ongoing"]
+            return "Game restored from file!"
         except FileNotFoundError:
             return "No save file found."
-        p = state["player"]
-        self._locations, self._items, self._npcs = self._load_game_data(p["data_file"])
-        self.player.current_location = p["current_location"]
-        self.player.inventory = p["inventory"]
-        self.player.score = p["score"]
-        self.player.moves_left = p["moves_left"]
-        self.player.start_location = p["start_location"]
-        self.player.data_file = p["data_file"]
-        self.deposited = set(state.get("deposited", []))
-        self.ongoing = state.get("ongoing", True)
-        loc_state = state.get("locations", {})
-        for loc_id_str, info in loc_state.items():
-            loc_id = int(loc_id_str)
-            if loc_id in self._locations:
-                self._locations[loc_id].items = info.get("items", [])
-                self._locations[loc_id].visited = info.get("visited", False)
-        npc_state = {d["name"]: d.get("given_hint", False) for d in state.get("npcs", [])}
-        for npc in self._npcs:
-            if npc.name in npc_state:
-                npc.given_hint = npc_state[npc.name]
-        return "Game restored from file!"
 
     def _find_npc_here(self, npcs_name: str) -> NPC | None:
         """Return the NPC with this name at the current location, if there is no such NPC, return None."""
         target_npc = self.normalize_item_name(npcs_name)
         for npc in self._npcs:
-            if npc.location_id == self.player.current_location and self.normalize_item_name(npc.name) == target_npc:
+            if npc.location_id == self.current_location_id and self.normalize_item_name(npc.name) == target_npc:
                 return npc
         return None
 
@@ -401,7 +303,7 @@ class AdventureGame:
 
         if npc.required_item:
             required_item = self.normalize_item_name(npc.required_item)
-            have_it = any(self.normalize_item_name(x) == required_item for x in self.player.inventory)
+            have_it = any(self.normalize_item_name(x) == required_item for x in self.inventory)
             if not have_it:
                 return f"{npc.name}: {npc.message}"
 
@@ -418,19 +320,17 @@ if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    import python_ta
-
-    python_ta.check_all(config={
-        'max-line-length': 120,
-        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    })
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'max-line-length': 120,
+    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    # })
 
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
     game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
-    menu = ["look", "inventory", "score", "log", "undo", "quit"]  # Regular menu options available at each location
+    menu = ["look", "inventory", "score", "log", "quit"]  # Regular menu options available at each location
     choice = None
-    start_loc = game.get_location()
-    game_log.add_event(Event(start_loc.id, start_loc.long_description), None)
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
     while game.ongoing:
@@ -448,7 +348,7 @@ if __name__ == "__main__":
         location.visited = True
 
         # Display possible actions at this location
-        print("What to do? Choose from: look, inventory, score, log, quit")
+        print("What to do? Choose from: look, inventory, score, log, quit, undo, save, restore")
         print("At this location, you can also:")
         for action in location.available_commands:
             print("-", action)
@@ -457,7 +357,18 @@ if __name__ == "__main__":
         choice = input("\nEnter action: ").lower().strip()
         executed = False
 
-        if choice.startswith("take "):
+        if choice == "save":
+            print(game.save_game())
+            continue  # Save doesn't count as a move or event
+
+        elif choice == "restore":
+            print(game.restore_game())
+            # After restore, reset the log to current state to prevent broken links
+            game_log = EventList()
+            game.log_action(game_log, "restore")
+            continue
+
+        elif choice.startswith("take "):
             item = choice[5:]
             message = game.take_item(item)
             print(message)
@@ -493,21 +404,20 @@ if __name__ == "__main__":
                 elif choice == "quit":
                     game.ongoing = False
                 elif choice == "inventory":
-                    if game.player.inventory == []:
+                    if game.inventory == []:
                         print("Your inventory is empty.")
                     else:
                         print("You are carrying:")
-                        for item in game.player.inventory:
+                        for item in game.inventory:
                             print("-", item)
                 elif choice == "score":
-                    print("Your current score is", game.player.score)
-                elif choice == "undo":
-                    print(game.undo(game_log))
+                    print("Your current score is", game.score)
                 executed = True
             elif choice in location.available_commands:
                 # Handle non-menu actions
                 result = location.available_commands[choice]
-                game.player.move(result)
+                game.current_location_id = result
+                game.moves_used += 1
                 executed = True
             else:
                 print("That was an invalid option, please try again.")
