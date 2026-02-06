@@ -115,73 +115,35 @@ if __name__ == "__main__":
     # })
 
     # provide a walkthrough of commands needed to win and lose the game
-    win_walkthrough = ["take t-card",  # 101
-                       "go south",  # 102
-                       "go south",  # 103
-                       "take spare room key",  # 103
-                       "go south",  # 104
-                       "pull",  # 105
-                       "take usb drive",  # 105
-                       "go north",  # 103
-                       "go north",  # 102
-                       "go east",  # 1
-                       "go east",  # 10
-                       "go west",  # 3
-                       "show/drop t-card",  # 3
-                       "go north",  # 301
-                       "go west",  # 302
-                       "up",  # 312
-                       "go east",  # 311
-                       "go north",  # 314
-                       "take lucky mug",  # 314
-                       "talk to the cafeteria staff",  # 314
-                       "go south",  # 311
-                       "go west",  # 312
-                       "down",  # 302
-                       "go east",  # 301
-                       "go north",  # 3
-                       "go west",  # 10
-                       "go south",  # 11
-                       "go south",  # 12
-                       "go east",  # 4
-                       "go east",  # 401
-                       "take left note",  # 401 some puzzle here
-                       "go north",  # 402
-                       "take laptop charger",  # 402
-                       "go south",  # 401
-                       "go west",  # 4
-                       "go west",  # 12
-                       "go south",  # 6
-                       "go south",  # 601
-                       "take toonie",  # 601
-                       "go east",  # 603
-                       "talk to Professor Paul He",  # 603
-                       "go west",  # 601
-                       "go west",  # 602
-                       "up",  # 612
-                       "go east",  # 611 some puzzle here
-                       "take a python reference book",  # 611
-                       "go west",  # 612
-                       "down",  # 602
-                       "go east",  # 601
-                       "go north",  # 6
-                       "go north",  # 12
-                       "go north",  # 11
-                       "go north",  # 10
-                       "go west",  # 1
-                       "go west",  # 102
-                       "go north",  # 101 some puzzle here
+    win_walkthrough = ["take t-card", "go south", "go south", "take spare room key", "go south", "pull",
+                       "take usb drive", "go north", "go north", "go east", "go east", "go west",
+                       "drop t-card",  # Drop at ID 3 (Target)
+                       "go north", "go west", "up", "go east", "go north", "take lucky mug",
+                       "talk to the cafeteria staff", "go south", "go west", "down", "go east",
+                       "go north", "go west", "go south", "go south", "go east", "go east",
+                       "take left note", "go north", "take laptop charger", "go south", "go west",
+                       "go west", "go south", "go south", "take toonie", "go east",
+                       "talk to Professor Paul He", "go west", "go west", "up", "go east",
+                       "go east",  # Move to 613 (Lecture Room)
+                       "drop toonie",  # Drop at ID 613 (Target)
+                       "go west", "go west", "down", "go east", "go north", "go north", "go north",
+                       "go north", "go west", "go west", "go north",
+                       "drop usb drive", "drop laptop charger", "drop lucky mug", "drop python reference book"
+                       # Final drops at 101
                        ]  # Create a list of all the commands needed to walk through your game to win it
 
-    expected_log = [101, 101,  # 101, take t-card
-                    102, 103, 103,  # go, go, take spare key
-                    104, 105, 105,  # go, pull, take usb
-                    103, 102, 1, 10, 3, 301, 302, 312, 311, 314, 314,  # move to 314, take mug
+    expected_log = [101, 101,  # Start, take t-card
+                    102, 103, 103,  # move, move, take spare key
+                    104, 105, 105,  # move, pull, take usb
+                    103, 102, 1, 10, 3, 3,  # move to 3, drop t-card
+                    301, 302, 312, 311, 314, 314, 314,  # move to 314, take mug, talk
                     311, 312, 302, 301, 3, 10, 11, 12, 4, 401, 401,  # move 401, take note
                     402, 402,  # go north, take charger
-                    401, 4, 12, 6, 601, 601,  # move to 601, take toonie
-                    603, 601, 602, 612, 611, 611,  # move to 611, take book
-                    612, 602, 601, 6, 12, 11, 10, 1, 102, 101  # go back to dorm room
+                    401, 4, 12, 6, 601, 601,  # move 601, take toonie
+                    603, 603,  # talk to Paul
+                    601, 602, 612, 611, 613, 613,  # move 611 (book), move 613, drop toonie
+                    612, 602, 601, 6, 12, 11, 10, 1, 102, 101,  # back to dorm
+                    101, 101, 101, 101  # 4 final drops at 101
                     ]  # Update this log list to include the IDs of all locations that would be visited
 
     sim = AdventureGameSimulation('game_data.json', 101, win_walkthrough)
