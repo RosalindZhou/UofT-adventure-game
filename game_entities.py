@@ -122,7 +122,9 @@ class Player:
     current_location: int
     inventory: list[str]
     score: int = 0
-    moves_left: int = 40
+    moves_left: int = 100
+    start_location: int = 0
+    data_file: str = ""
 
     def move(self, new_location_id: int) -> None:
         """Update the player's current location and score."""
