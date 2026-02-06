@@ -62,10 +62,7 @@ class AdventureGameSimulation:
         curr = current_location
         for command in commands:
             cmd = command.lower().strip()
-            if cmd == "undo":
-                self._game.undo(self._events)
-                curr = self._game.get_location()
-            elif cmd == "save":
+            if cmd == "save":
                 self._game.save_game()
             elif cmd == "restore":
                 self._game.restore_game()
@@ -152,8 +149,7 @@ if __name__ == "__main__":
                         311, 312, 302, 301, 3, 10, 11, 12, 4, 401, 401,  # move 401, take note
                         402, 402,  # go north, take charger
                         401, 4, 12, 6, 601, 601,  # move 601, take toonie
-                        603, 603,  # talk to Paul
-                        601, 602, 612, 611, 613, 613, 613,  # move 611, move 613, drop toonie
+                        603, 601, 602, 612, 611, 613, 613, 613,  # move 611, move 613, drop toonie
                         612, 602, 601, 6, 12, 11, 10, 1, 102, 101,  # back to dorm
                         101, 101, 101, 101  # 4 final drops at 101
                         ]  # Update this log list to include the IDs of all locations that would be visited
@@ -188,12 +184,6 @@ if __name__ == "__main__":
     assert "t-card" not in sim_score.game.inventory
 
     # Add more enhancement_demos if you have more enhancements
-    undo_demo = ["take t-card", "go south", "undo"]
-    expected_undo_log = [101, 101, 102, 101]
-    sim_undo = AdventureGameSimulation('game_data.json', 101, undo_demo)
-    assert expected_undo_log == sim_undo.get_id_log()
-    assert "t-card" not in sim_undo.game.inventory
-    assert "t-card" in sim_undo.game.get_location(101).items
 
     save_restore_demo = ["take t-card", "go south", "go east", "go east", "go west", "drop t-card", "save", "go east",
                          "restore"]
