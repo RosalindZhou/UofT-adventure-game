@@ -143,7 +143,7 @@
       "id": 105,
       "name": "the Study Room",
       "brief_description": "You enter the quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive is left on the table. You keep the door open.",
+      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive left on the table. You keep the door open.",
       "available_commands": {
         "go north": 103
       },
