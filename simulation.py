@@ -60,11 +60,22 @@ class AdventureGameSimulation:
         - all commands in the given list are valid commands when starting from current_location
         """
         curr = current_location
-        for cmd in commands:
+        for command in commands:
+            cmd = command.lower().strip()
             if cmd in curr.available_commands:
                 next_id = curr.available_commands[cmd]
                 self._game.current_location_id = next_id
                 curr = self._game.get_location()
+            elif cmd.startswith("take "):
+                item = cmd[5:].strip()
+                self._game.take_item(item)
+            elif cmd.startswith("drop "):
+                item = cmd[5:].strip()
+                self._game.drop_item(item)
+            elif cmd in {"look", "inventory", "score", "log", "quit"}:
+                pass
+            else:
+                raise ValueError(f"Invalid command in simulation: {command!r}.")
             new_event = Event(curr.id, curr.long_description)
             self._events.add_event(new_event, cmd)
 
@@ -112,8 +123,8 @@ if __name__ == "__main__":
                        "go north",  # 102
                        "go east",  # 1
                        "go east",  # 10
-                       "go east",  # 3
-                       "show/drop t-card"  # 3
+                       "go west",  # 3
+                       "show/drop t-card",  # 3
                        "go north",  # 301
                        "go west",  # 302
                        "up",  # 312
@@ -206,7 +217,7 @@ if __name__ == "__main__":
                     101
                     ]  # Update this log list to include the IDs of all locations that would be visited
     # Uncomment the line below to test your walkthrough
-    sim = AdventureGameSimulation('game_data.json', 1, win_walkthrough)
+    sim = AdventureGameSimulation('game_data.json', 101, win_walkthrough)
     assert expected_log == sim.get_id_log()
 
     # Create a list of all the commands needed to walk through your game to reach a 'game over' state
