@@ -110,6 +110,7 @@ class AdventureGameSimulation:
 
     @property
     def game(self):
+        """run the game simulation"""
         return self._game
 
 
