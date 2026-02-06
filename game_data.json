@@ -395,7 +395,7 @@
       "location_id": 103,
       "message": "If you lose your key, you can come to me~",
       "required_item": "",
-      "success_message": "Keep your key carefully~",
+      "success_message": "",
       "given_hint": false
     }
   ]
