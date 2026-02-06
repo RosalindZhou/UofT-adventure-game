@@ -333,20 +333,20 @@ class AdventureGame:
             npc.given_hint = True
             return f"{npc.name}: {npc.message}"
 
-    def _has_item(self, item_name: str) -> bool:
-        target = self.normalize_item_name(item_name)
-        return any(self.normalize_item_name(x) == target for x in self.player.inventory)
+    def has_item(self, item_name: str) -> bool:
+        """Return whether the player currently has the given item."""
+        return self._has_item(item_name)
 
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120,
+        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    })
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
     game = AdventureGame('game_data.json', 101)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "save", "restore", "quit"]  # Regular menu options available at each
@@ -434,7 +434,7 @@ if __name__ == "__main__":
                 executed = True
             elif choice in location.available_commands:
                 result = location.available_commands[choice]
-                if result == 3 and not game._has_item("t-card"):
+                if result == 3 and not game.has_item("t-card"):
                     print("You need a T-Card to enter Robarts Library.")
                     executed = True
                 else:
