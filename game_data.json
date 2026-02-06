@@ -7,8 +7,8 @@
       "long_description": "To your West stands the massive, concrete form of Robarts Library. To your East stands the building of New college. The street continues South toward the heart of campus.",
       "available_commands": {
         "go south": 11,
-        "go west": 3,
-        "go east": 1
+        "go west": 1,
+        "go east": 3
       },
       "items": []
     },
