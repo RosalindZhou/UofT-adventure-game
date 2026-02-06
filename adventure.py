@@ -103,7 +103,7 @@ class AdventureGame:
 
         locations = {}
         for loc_data in data['locations']:  # Go through each element associated with the 'locations' key in the file
-            location_obj = Location(loc_data['id'], loc_data['brief_description'], loc_data['long_description'],
+            location_obj = Location(loc_data['id'], loc_data['name'], loc_data['brief_description'], loc_data['long_description'],
                                     loc_data['available_commands'], loc_data['items'])
             locations[loc_data['id']] = location_obj
 
@@ -228,6 +228,13 @@ class AdventureGame:
                     "You submitted the project just in time. You win!")
         return None
 
+    def location_format(self, loc: Location, visited: bool) -> str:
+        header = f"LOCATION {loc.id}\n"
+        if visited:
+            return header + loc.long_description
+        else:
+            return header + loc.brief_description
+
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
@@ -255,11 +262,8 @@ if __name__ == "__main__":
 
         # TODO: Depending on whether or not it's been visited before,
         #  print either full description (first time visit) or brief description (every subsequent visit) of location
-        if location.visited:
-            print(location.brief_description)
-        else:
-            print(location.long_description)
-            location.visited = True
+        print(game.location_format(location, visited=location.visited))
+        location.visited = True
 
         # Display possible actions at this location
         print("What to do? Choose from: look, inventory, score, log, quit")
@@ -269,64 +273,61 @@ if __name__ == "__main__":
 
         # Validate choice
         choice = input("\nEnter action: ").lower().strip()
+        executed = False
+
         if choice.startswith("take "):
             item = choice[5:]
             message = game.take_item(item)
             print(message)
-            game.log_action(game_log, choice)
-            end_message = game.check_end()
-            if end_message is not None:
-                print(end_message)
-            continue
+            executed = True
 
         elif choice.startswith("drop "):
             item = choice[5:]
             message = game.drop_item(item)
             print(message)
+            executed = True
+
+        if not executed:
+            while choice not in location.available_commands and choice not in menu:
+                print("That was an invalid option; try again.")
+                choice = input("\nEnter action: ").lower().strip()
+
+            print("========")
+            print("You decided to:", choice)
+
+            if choice in menu:
+            # TODO: Handle each menu command as appropriate
+                if choice == "log":
+                    game_log.display_events()
+            # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
+                elif choice == "look":
+                     print(location.long_description)
+                elif choice == "quit":
+                     game.ongoing = False
+                elif choice == "inventory":
+                     if game.inventory == []:
+                         print("Your inventory is empty.")
+                     else:
+                         print("You are carrying:")
+                         for item in game.inventory:
+                             print("-", item)
+                elif choice == "score":
+                    print("Your current score is", game.score)
+                executed = True
+            elif choice in location.available_commands:
+            # Handle non-menu actions
+                result = location.available_commands[choice]
+                game.current_location_id = result
+                game.moves_used += 1
+                executed = True
+            else:
+                print("That was an invalid option, please try again.")
+                continue
+        if executed:
             game.log_action(game_log, choice)
             end_message = game.check_end()
             if end_message is not None:
                 print(end_message)
-            continue
-
-        while choice not in location.available_commands and choice not in menu:
-            print("That was an invalid option; try again.")
-            choice = input("\nEnter action: ").lower().strip()
-
-        print("========")
-        print("You decided to:", choice)
-
-        if choice in menu:
-            # TODO: Handle each menu command as appropriate
-            if choice == "log":
-                game_log.display_events()
-            # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
-            elif choice == "look":
-                print(location.long_description)
-            elif choice == "quit":
-                game.ongoing = False
-            elif choice == "inventory":
-                if game.inventory == []:
-                    print("Your inventory is empty.")
-                else:
-                    print("You are carrying:")
-                    for item in game.inventory:
-                        print("-", item)
-            elif choice == "score":
-                print("Your current score is", game.score)
-                game.log_action(game_log, choice)
-        elif choice in location.available_commands:
-            # Handle non-menu actions
-            result = location.available_commands[choice]
-            game.current_location_id = result
-            game.moves_used += 1
-            game.log_action(game_log, choice)
-        else:
-            print("That was an invalid option, please try again.")
-            continue
-        end_message = game.check_end()
-        if end_message is not None:
-            print(end_message)
 
             # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
             # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game

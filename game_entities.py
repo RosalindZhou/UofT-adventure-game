@@ -46,6 +46,7 @@ class Location:
     # All locations in your game MUST be represented as an instance of this class.
 
     id: int
+    name: str
     brief_description: str
     long_description: str
     available_commands: dict[str, int]

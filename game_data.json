@@ -324,7 +324,7 @@
       "description": "There is a python reference book left by someone, maybe we can have a look?",
       "start_position": 611,
       "target_position": 0,
-      "target points": 5
+      "target_points": 5
     },
     {
       "name": "t-card",
@@ -336,7 +336,7 @@
     {
       "name": "usb drive",
       "description": "A small black USB drive containing your important course project.",
-      "start_position": 104,
+      "start_position": 105,
       "target_position": 101,
       "target_points": 10
     },
@@ -358,6 +358,7 @@
       "name": "left note",
       "description": "It's a left note by someone. TODO: handle this puzzle",
       "start_position": 401,
+      "target_position": 0,
       "target_points": 5
     },
     {
@@ -374,7 +375,7 @@
       "location_id": 603,
       "message": "If you have any confusion for your code you can use python reference book. That usually works. ",
       "required_item": "toonie",
-      "succes_message": "Oh thank you, but why you give me a coin?",
+      "success_message": "Oh thank you, but why you give me a coin?",
       "given_hint": False
     },
     {
@@ -382,7 +383,7 @@
       "location_id": 603,
       "message": "Today, a cup of coffee costs 5 yuan. If you bring your own cup, it's free!",
       "required_item": "lucky mug",
-      "succes_message": "Oh! You brought your own cup! To show our appreciation for the environmental-conscious students, we can offer you a free cup of coffee.",
+      "success_message": "Oh! You brought your own cup! To show our appreciation for the environmental-conscious students, we can offer you a free cup of coffee.",
       "given_hint": False
     },
     {
@@ -390,7 +391,7 @@
       "location_id": 402,
       "message": "Sorry, I was in a hurry when leaving and picked up the wrong charging cable for you. Go and get it from the backpack over there.",
       "required_item": "",
-      "succes_message": "",
+      "success_message": "",
       "given_hint": False
     }
 
