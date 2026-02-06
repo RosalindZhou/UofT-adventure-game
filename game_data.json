@@ -142,7 +142,7 @@
       "id": 105,
       "name": "the Study Room",
       "brief_description": "You enter the quiet study room in New College.",
-      "long_description": "Have you been tricked by the note at the door? Hahaha.This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive left on the table. You keep the door open.",
+      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive left on the table. You keep the door open.",
       "available_commands": {
         "go north": 103
       },
@@ -296,7 +296,7 @@
       "id": 401,
       "name": "Lecture Room 1",
       "brief_description": "This is Lecture Room 1",
-      "long_description": "You are now in the Lecture Room 1, this room is empty.The blackboard still has the writing from the last class.There is a left note on the desk.",
+      "long_description": "You are now in the Lecture Room 1, this room is empty.The blackboard still has the writing from the last class.",
       "available_commands": {
         "go north": 402,
         "go west": 4
@@ -307,7 +307,7 @@
       "id": 402,
       "name": "Lecture Room 2",
       "brief_description": "This is Lecture Room 2",
-      "long_description": "You are now in the Lecture Room 2,you see classmates are listening attentively (actually just daydreaming)",
+      "long_description": "You are now in the Lecture Room 2,you see your classmates are listening attentively (actually just daydreaming)",
       "available_commands": {
         "go south": 401
       },
@@ -368,17 +368,9 @@
       "name": "room key",
       "description": "It's a spare room key, you can use it to open your room.",
       "start_position": 103,
-      "target_position": 603,
-      "target_points": 1
-    },
-    {
-      "name": "a bunch of flower",
-      "description": "It's a bunch of flower, maybe someone will like it.",
-      "start_position": 11,
-      "target_position": 402,
+      "target_position": 101,
       "target_points": 1
     }
-
   ],
   "NPC": [
     {
@@ -390,11 +382,11 @@
       "given_hint": false
     },
     {
-      "name": "classmates",
+      "name": "Your classmates",
       "location_id": 402,
-      "message": "Sorry, I was in a hurry when leaving and picked up the wrong Laptop charger for you. Go and get it from the backpack over there.",
-      "required_item": "left note",
-      "success_message": "Did you really get carried away on 137??",
+      "message": "Sorry, I was in a hurry when leaving and picked up the wrong charging cable for you. Go and get it from the backpack over there.",
+      "required_item": "",
+      "success_message": "",
       "given_hint": false
     },
     {
@@ -413,22 +405,6 @@
       "answer": "drop toonie",
       "solved": false,
       "reward_item_name": "python reference book"
-    },
-    {
-      "name": "Professor Paul",
-      "location_id": 603,
-      "message": "Is this Project difficult or not?",
-      "required_item": "left note",
-      "success_message": "???execuse me????",
-      "given_hint": false
-    },
-    {
-      "name": "Professor Boris",
-      "location_id": 402,
-      "message": "Do you want a primary puzzle or secondary?",
-      "required_item": "a bunch of flower",
-      "success_message": "Oh! thank you!",
-      "given_hint": false
     }
   ]
 }
