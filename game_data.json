@@ -106,11 +106,11 @@
       "id": 611,
       "name": "Lab Room",
       "brief_description": "You are now in front of lab room",
-      "long_description": "You are now in the lab room. It is locked. You must use key to enter this room",
+      "long_description": "You are now in the lab room. Some students are debugging.",
       "available_commands": {
         "go west": 311
       },
-       "items": ["a python reference book"]
+       "items": []
     },
     {
       "id": 101,
@@ -321,13 +321,6 @@
       "target_points": 5
     },
     {
-      "name": "a python reference book",
-      "description": "There is a python reference book left by someone, maybe we can have a look?",
-      "start_position": 611,
-      "target_position": 0,
-      "target_points": 5
-    },
-    {
       "name": "t-card",
       "description": "Your University of Toronto T-Card. Essential for library access.",
       "start_position": 101,
@@ -371,14 +364,6 @@
     }
   ],
   "NPC": [
-    {
-      "name": "Professor Paul He",
-      "location_id": 603,
-      "message": "If you have any confusion for your code you can use python reference book. That usually works. ",
-      "required_item": "toonie",
-      "success_message": "Oh thank you, but why you give me a coin?",
-      "given_hint": False
-    },
     {
       "name": "The cafeteria staff",
       "location_id": 314,
