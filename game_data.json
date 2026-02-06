@@ -4,7 +4,7 @@
       "id": 10,
       "name": "St. George Street (North)",
       "brief_description": "You are on the north end of St. George Street, near the library.",
-      "long_description": "To your West stands the massive, concrete form of Robarts Library. To your East stands the building of New college. The street continues South toward the heart of campus.",
+      "long_description": "To your East stands the massive, concrete form of Robarts Library. To your West stands the building of New college. The street continues South toward the heart of campus.",
       "available_commands": {
         "go south": 11,
         "go west": 1,
@@ -143,7 +143,7 @@
       "id": 105,
       "name": "the Study Room",
       "brief_description": "You enter the quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive is left on the table. You keep the door open.",
+      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive left on the table. You keep the door open.",
       "available_commands": {
         "go north": 103
       },
@@ -395,7 +395,7 @@
       "location_id": 103,
       "message": "If you lose your key, you can come to me~",
       "required_item": "",
-      "success_message": "Keep your key carefully~",
+      "success_message": "",
       "given_hint": false
     }
   ]

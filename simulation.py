@@ -110,6 +110,7 @@ class AdventureGameSimulation:
 
     @property
     def game(self):
+        """run the game simulation"""
         return self._game
 
 
@@ -172,16 +173,16 @@ if __name__ == "__main__":
     expected_inv_log = [101, 101, 101, 102, 102]
     sim_inv = AdventureGameSimulation(AdventureGameSimulation('game_data.json', 101, inventory_demo))
     assert expected_inv_log == sim_inv.get_id_log()
-    assert "t-card" in sim_inv.game.inventory
+    assert "t-card" in sim_inv.game.player.inventory
     assert "t-card" not in sim_inv.game.get_location(101).items
 
     scores_demo = ["take t-card", "go south", "go east", "go east", "go east", "drop t-card", "score"]
     expected_score_log = [101, 101, 102, 1, 10, 3, 3, 3]
     sim_score = AdventureGameSimulation('game_data.json', 101, scores_demo)
     assert expected_score_log == sim_score.get_id_log()
-    assert sim_score.game.score == 5
+    assert sim_score.game.player.score == 5
     assert "t-card" in sim_score.game.get_location(3).items
-    assert "t-card" not in sim_score.game.inventory
+    assert "t-card" not in sim_score.game.player.inventory
 
     # Add more enhancement_demos if you have more enhancements
 
@@ -190,8 +191,8 @@ if __name__ == "__main__":
     expected_sr_log = [101, 101, 102, 1, 10, 3, 3, 3, 10, 3]
     sim_sr = AdventureGameSimulation('game_data.json', 101, save_restore_demo)
     assert expected_sr_log == sim_sr.get_id_log()
-    assert sim_sr.game.score == 5
-    assert "t-card" not in sim_sr.game.inventory
+    assert sim_sr.game.player.score == 5
+    assert "t-card" not in sim_sr.game.player.inventory
 
     print("All advanced simulations passed!")
     # Note: You can add more code below for your own testing purposes
