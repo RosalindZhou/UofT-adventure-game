@@ -251,58 +251,6 @@ class AdventureGame:
         if item_obj:
             item_obj.description = new_description
 
-    def undo(self, curr_game_log: EventList) -> str:
-        """
-        Reverts the game state to the previous event, including position,
-        inventory, and score synchronization.
-        """
-        if curr_game_log.is_empty() or curr_game_log.first == curr_game_log.last:
-            return "Nothing to undo."
-
-        # 1. Get the current state being removed
-        current_event = curr_game_log.last
-        cmd = current_event.prev_command
-
-        # 2. Use a helper to reverse item logic (fixes nesting error)
-        if cmd:
-            self._revert_item_state(cmd)
-
-        # 3. Remove the state from the linked list
-        curr_game_log.remove_last_event()
-
-        # 4. Move player back to the previous event ID
-        self.current_location_id = curr_game_log.last.id_num
-        if self.moves_used > 0:
-            self.moves_used -= 1
-
-        return f"Undone! You are back at: {self.get_location().name}"
-
-    def _revert_item_state(self, cmd: str) -> None:
-        """Helper to reverse changes to inventory and score based on the command."""
-        if cmd.startswith("take "):
-            item_name = cmd[5:].strip()
-            actual_name = self._find_in_inventory(item_name)
-            if actual_name:
-                self.inventory.remove(actual_name)
-                self.get_location().items.append(actual_name)
-
-        elif cmd.startswith("drop "):
-            item_name = cmd[5:].strip()
-            actual_name = self._find_in_location_items(self.get_location(), item_name)
-            if actual_name:
-                self._reverse_drop(actual_name)
-
-    def _reverse_drop(self, actual_name: str) -> None:
-        """Helper to specifically reverse a drop action."""
-        self.get_location().items.remove(actual_name)
-        self.inventory.append(actual_name)
-        norm_name = self.normalize_item_name(actual_name)
-        if norm_name in self.deposited:
-            item_obj = self.get_item(actual_name)
-            if item_obj:
-                self.score -= item_obj.target_points
-                self.deposited.remove(norm_name)
-
     def save_game(self, filename: str = "savegame.json") -> str:
         """Serializes the core game state into a JSON file."""
         state = {
@@ -372,12 +320,12 @@ if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    import python_ta
-
-    python_ta.check_all(config={
-        'max-line-length': 120,
-        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    })
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'max-line-length': 120,
+    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    # })
 
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
     game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
@@ -400,7 +348,7 @@ if __name__ == "__main__":
         location.visited = True
 
         # Display possible actions at this location
-        print("What to do? Choose from: look, inventory, score, log, quit")
+        print("What to do? Choose from: look, inventory, score, log, quit, undo, save, restore")
         print("At this location, you can also:")
         for action in location.available_commands:
             print("-", action)
@@ -409,7 +357,18 @@ if __name__ == "__main__":
         choice = input("\nEnter action: ").lower().strip()
         executed = False
 
-        if choice.startswith("take "):
+        if choice == "save":
+            print(game.save_game())
+            continue  # Save doesn't count as a move or event
+
+        elif choice == "restore":
+            print(game.restore_game())
+            # After restore, reset the log to current state to prevent broken links
+            game_log = EventList()
+            game.log_action(game_log, "restore")
+            continue
+
+        elif choice.startswith("take "):
             item = choice[5:]
             message = game.take_item(item)
             print(message)
