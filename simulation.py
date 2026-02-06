@@ -111,12 +111,12 @@ if __name__ == "__main__":
     #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
     # })
 
-    # TODO: Modify the code below to provide a walkthrough of commands needed to win and lose the game
+    # provide a walkthrough of commands needed to win and lose the game
     win_walkthrough = ["take t-card",  # 101
-                       "go South",  # 102
-                       "go South",  # 103
+                       "go south",  # 102
+                       "go south",  # 103
                        "take spare room key",  # 103
-                       "go South",  # 104
+                       "go south",  # 104
                        "pull",  # 105
                        "take usb drive",  # 105
                        "go north",  # 103
@@ -148,8 +148,8 @@ if __name__ == "__main__":
                        "go south",  # 401
                        "go west",  # 4
                        "go west",  # 12
-                       "go north",  # 6
-                       "go north",  # 601
+                       "go south",  # 6
+                       "go south",  # 601
                        "take toonie",  # 601
                        "go east",  # 603
                        "talk to Professor Paul He"  # 603
@@ -169,81 +169,47 @@ if __name__ == "__main__":
                        "go west",  # 102
                        "go north",  # 101 some puzzle here
                        ]  # Create a list of all the commands needed to walk through your game to win it
-    expected_log = [101,
-                    102,
-                    103,
-                    104,
-                    105,
-                    103,
-                    102,
-                    1,
-                    10,
-                    3,
-                    301,
-                    302,
-                    312,
-                    311,
-                    314,
-                    311,
-                    312,
-                    302,
-                    301,
-                    3,
-                    10,
-                    11,
-                    12,
-                    4,
-                    401,
-                    402,
-                    401,
-                    4,
-                    12,
-                    6,
-                    601,
-                    603,
-                    601,
-                    602,
-                    612,
-                    611,
-                    612,
-                    602,
-                    601,
-                    6,
-                    12,
-                    11,
-                    10,
-                    1,
-                    102,
-                    101
+
+    expected_log = [101, 101,  # 101, take t-card
+                    102, 103, 103,  # go, go, take spare key
+                    104, 105, 105,  # go, pull, take usb
+                    103, 102, 1, 10, 3, 301, 302, 312, 311, 314, 314,  # move to 314, take mug
+                    311, 312, 302, 301, 3, 10, 11, 12, 4, 401, 401,  # move 401, take note
+                    402, 402,  # go north, take charger
+                    401, 4, 12, 6, 601, 601,  # move to 601, take toonie
+                    603, 601, 602, 612, 611, 611,  # move to 611, take book
+                    612, 602, 601, 6, 12, 11, 10, 1, 102, 101  # go back to dorm room
                     ]  # Update this log list to include the IDs of all locations that would be visited
-    # Uncomment the line below to test your walkthrough
+
     sim = AdventureGameSimulation('game_data.json', 101, win_walkthrough)
     assert expected_log == sim.get_id_log()
 
     # Create a list of all the commands needed to walk through your game to reach a 'game over' state
-    lose_demo = []
-    expected_log = []  # Update this log list to include the IDs of all locations that would be visited
+    lose_demo = ["go south", "go north"] * 101  # 202 moves
+    expected_lose_log = [101] + [102,
+                                 101] * 101  # Update this log list to include the IDs of all locations that would be visited
     # Uncomment the line below to test your demo
-    sim = AdventureGameSimulation('game_data.json', 1, lose_demo)
+    sim = AdventureGameSimulation('game_data.json', 101, lose_demo)
     assert expected_log == sim.get_id_log()
 
-    # TODO: Add code below to provide walkthroughs that show off certain features of the game
-    # TODO: Create a list of commands involving visiting locations, picking up items, and then
-    #   checking the inventory, your list must include the "inventory" command at least once
-    # inventory_demo = [..., "inventory", ...]
-    # expected_log = []
-    # sim = AdventureGameSimulation(...)
-    # assert expected_log == sim.get_id_log()
+    # Add code below to provide walkthroughs that show off certain features of the game
+    # Create a list of commands involving visiting locations, picking up items, and then
+    # checking the inventory, your list must include the "inventory" command at least once
+    inventory_demo = ["take t-card", "inventory", "go south", "inventory"]
+    expected_log = [101, 101, 101, 102, 102]
+    sim = AdventureGameSimulation(AdventureGameSimulation('game_data.json', 101, inventory_demo))
+    assert expected_log == sim.get_id_log()
 
-    # scores_demo = [..., "score", ...]
-    # expected_log = []
-    # sim = AdventureGameSimulation(...)
-    # assert expected_log == sim.get_id_log()
+    scores_demo = ["take t-card", "go south", "go east", "go east", "go west", "drop t-card", "score"]
+    expected_log = [101, 101, 102, 1, 10, 3, 3, 3]
+    sim = AdventureGameSimulation('game_data.json', 101, scores_demo)
+    assert expected_log == sim.get_id_log()
 
     # Add more enhancement_demos if you have more enhancements
     # enhancement1_demo = [...]
     # expected_log = []
     # sim = AdventureGameSimulation(...)
     # assert expected_log == sim.get_id_log()
+    print("All simulations passed!")
 
     # Note: You can add more code below for your own testing purposes
