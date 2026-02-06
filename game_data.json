@@ -164,7 +164,7 @@
       "id": 103,
       "name": "the Front Desk",
       "brief_description": "You are standing in front of New College front desk.",
-      "long_description": "This is the Front Desk. The staff were feeling drowsy.To the North is the lobby, and to the South is the study room.",
+      "long_description": "This is the Front Desk. The staff were feeling drowsy. To the North is the lobby, and to the South is the study room.",
       "available_commands": {
         "go north": 102,
         "go south": 104
