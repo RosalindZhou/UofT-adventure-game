@@ -391,7 +391,7 @@
       "given_hint": false
     },
     {
-      "name": "Front desk staff",
+      "name": "Staff",
       "location_id": 103,
       "message": "If you lose your key, you can come to me~",
       "required_item": "",
