@@ -34,12 +34,14 @@ class Event:
     Instance Attributes:
     - id_num: Integer id of this event's location
     - description: Long description of this event's location
+    - prev_command: String command which is the previous command, None if this is the first game event
     - next_command: String command which leads this event to the next event, None if this is the last game event
     - next: Event object representing the next event in the game, or None if this is the last game event
     - prev: Event object representing the previous event in the game, None if this is the first game event
     """
     id_num: int
     description: str
+    prev_command: Optional[str] = None
     next_command: Optional[str] = None
     next: Optional[Event] = None
     prev: Optional[Event] = None
@@ -127,8 +129,8 @@ if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120,
+        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    })
