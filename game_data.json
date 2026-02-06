@@ -378,7 +378,7 @@
       "message": "Today, a cup of coffee costs 5 yuan. If you bring your own cup, it's free!",
       "required_item": "lucky mug",
       "success_message": "Oh! You brought your own cup! To show our appreciation for the environmental-conscious students, we can offer you a free cup of coffee.",
-      "given_hint": False
+      "given_hint": false
     },
     {
       "name": "Your classmates",
@@ -386,7 +386,7 @@
       "message": "Sorry, I was in a hurry when leaving and picked up the wrong charging cable for you. Go and get it from the backpack over there.",
       "required_item": "",
       "success_message": "",
-      "given_hint": False
+      "given_hint": false
     }
   ]
 }
