@@ -62,6 +62,7 @@ class AdventureGameSimulation:
         curr = current_location
         for command in commands:
             cmd = command.lower().strip()
+            curr = self._game.get_location()
             if cmd == "save":
                 self._game.save_game()
             elif cmd == "restore":
@@ -69,7 +70,7 @@ class AdventureGameSimulation:
                 curr = self._game.get_location()
             elif cmd in curr.available_commands:
                 next_id = curr.available_commands[cmd]
-                self._game.current_location_id = next_id
+                self._game.player.move(next_id)
                 curr = self._game.get_location()
             elif cmd.startswith("take "):
                 item = cmd[5:].strip()
@@ -83,9 +84,12 @@ class AdventureGameSimulation:
             elif cmd in {"look", "inventory", "score", "log", "quit"}:
                 pass
             else:
-                raise ValueError(f"Invalid command in simulation: {command!r}.")
-            new_event = Event(curr.id, curr.long_description)
-            self._events.add_event(new_event, cmd)
+                raise ValueError(
+                    f"Invalid command in simulation: {command!r} at location {curr.id} "
+                    f"(valid commands: {list(curr.available_commands.keys())})."
+                )
+            new_loc = self._game.get_location()
+            self._events.add_event(Event(new_loc.id, new_loc.long_description), cmd)
 
     def get_id_log(self) -> list[int]:
         """

@@ -179,7 +179,7 @@ class AdventureGame:
         """Return a message about whether the item is available to be taken."""
         available_item = available_item.strip()
         if available_item == "":
-            return "You did not enter an item."
+            return "You did not take an item."
         curr_location = self.get_location()
         actual_name = self._find_in_location_items(curr_location, available_item)
         if actual_name is None:
@@ -435,7 +435,7 @@ if __name__ == "__main__":
                 executed = True
             elif choice in location.available_commands:
                 result = location.available_commands[choice]
-                if result == 3 and not game.has_item("t-card"):
+                if result == 301 and not game.has_item("t-card"):
                     print("You need a T-Card to enter Robarts Library.")
                     executed = True
                     executed = True
