@@ -438,6 +438,8 @@ if __name__ == "__main__":
                 if result == 301 and not game.has_item("t-card"):
                     print("You need a T-Card to enter Robarts Library.")
                     executed = True
+                elif result == 101 and not game.has_item("room key"):
+                    print("You need a room key to open your door.")
                     executed = True
                 else:
                     game.player.move(result)
