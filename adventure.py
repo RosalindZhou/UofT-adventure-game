@@ -335,7 +335,8 @@ class AdventureGame:
 
     def has_item(self, item_name: str) -> bool:
         """Return whether the player currently has the given item."""
-        return self.has_item(item_name)
+        target = self.normalize_item_name(item_name)
+        return any(self.normalize_item_name(x) == target for x in self.player.inventory)
 
 
 if __name__ == "__main__":
@@ -436,6 +437,7 @@ if __name__ == "__main__":
                 result = location.available_commands[choice]
                 if result == 3 and not game.has_item("t-card"):
                     print("You need a T-Card to enter Robarts Library.")
+                    executed = True
                     executed = True
                 else:
                     game.player.move(result)
