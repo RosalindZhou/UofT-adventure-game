@@ -29,7 +29,7 @@
       "brief_description": "You are on the south end of St. George Street, near the labs.",
       "long_description": "The atmosphere changes here as you get closer to the engineering and physics buildings. To the West is the Bahen Centre, and to the East is the McLennan Physical Laboratories (MP).",
       "available_commands": {
-        "go north": 10,
+        "go north": 11,
         "go west": 6,
         "go east": 4
     },
@@ -108,7 +108,8 @@
       "brief_description": "You are now in front of lab room",
       "long_description": "You are now in the lab room. The door lock is a semi-circular opening.Maybe we can put something on to open it?",
       "available_commands": {
-        "go west": 311
+        "go west": 612,
+        "go east": 613
       },
        "items": ["a python reference book"]
     },
@@ -387,6 +388,5 @@
       "success_message": "",
       "given_hint": False
     }
-
   ]
 }

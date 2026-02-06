@@ -214,7 +214,7 @@ class AdventureGame:
     def log_action(self, curr_log: EventList, cmd: str) -> None:
         """Record one chronological event after executing command."""
         loc = self.get_location()
-        curr_log.add_event(Event(loc.id, loc.long_description), command=cmd)
+        curr_log.add_event(Event(loc.id, loc.long_description), cmd)
 
     def check_end(self) -> Optional[str]:
         """Return a message if the game ends, otherwise return None."""
@@ -374,13 +374,12 @@ if __name__ == "__main__":
 
         if choice == "save":
             print(game.save_game())
-            continue
+            executed = True
 
         elif choice == "restore":
             print(game.restore_game())
             game_log = EventList()
-            game.log_action(game_log, "restore")
-            continue
+            executed = True
 
         elif choice.startswith("take "):
             item = choice[5:]
