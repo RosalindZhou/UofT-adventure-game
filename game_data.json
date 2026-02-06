@@ -399,3 +399,15 @@
     }
   ]
 }
+{
+  "puzzles": [
+    {
+      "location_id": 611,
+      "puzzle_prompt": "You are in the Lab Room. A student nearby is looking for something and says, 'I just need something small and circular to unlock this...'",
+      "answer": "drop toonie",
+      "solved": false,
+      "reward_item_name": "python reference book"
+    },
+  
+  ]
+}
