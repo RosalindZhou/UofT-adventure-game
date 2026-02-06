@@ -397,9 +397,7 @@
       "success_message": "",
       "given_hint": false
     }
-  ]
-}
-{
+  ],
   "puzzles": [
     {
       "location_id": 611,
@@ -407,7 +405,6 @@
       "answer": "drop toonie",
       "solved": false,
       "reward_item_name": "python reference book"
-    },
-  
+    }
   ]
 }
