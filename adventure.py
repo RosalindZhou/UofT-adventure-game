@@ -36,11 +36,11 @@ class AdventureGame:
     Instance Attributes:
         - self.current_location_id: the id of the player's current location in the game
         - ongoing: whether the game is ongoing
-        - inventory: TODO: handle these instance attributes
-        - score:
-        - moves_used:
-        - max_moves:
-        - deposited:
+        - inventory: a list of item names currently held by the player
+        - score: the player's current score based on deposited items
+        - moves_used: the number of moves the player has made
+        - max_moves: the maximum number of moves allowed before losing
+        - deposited: a set of normalized item names that have been correctly placed
 
     Representation Invariants:
         - self.current_location_id in self._locations
