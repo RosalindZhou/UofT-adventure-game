@@ -152,7 +152,7 @@ if __name__ == "__main__":
                        "go south",  # 601
                        "take toonie",  # 601
                        "go east",  # 603
-                       "talk to Professor Paul He"  # 603
+                       "talk to Professor Paul He",  # 603
                        "go west",  # 601
                        "go west",  # 602
                        "up",  # 612
