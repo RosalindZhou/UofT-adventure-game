@@ -106,7 +106,7 @@
       "id": 611,
       "name": "Lab Room",
       "brief_description": "You are now in front of lab room",
-      "long_description": "You are now in the lab room. The door lock is a semi-circular opening.Maybe we can put something on to open it?",
+      "long_description": "You are now in the lab room. The door lock is a semi-circular opening. Maybe we can put something on to open it?",
       "available_commands": {
         "go west": 612,
         "go east": 613
@@ -382,7 +382,7 @@
   ],
   "NPC": [
     {
-      "name": "The cafeteria staff",
+      "name": "cafeteria staff",
       "location_id": 314,
       "message": "Today, a cup of coffee costs 5 yuan. If you bring your own cup, it's free!",
       "required_item": "lucky mug",
@@ -390,7 +390,7 @@
       "given_hint": false
     },
     {
-      "name": "Your classmates",
+      "name": "classmates",
       "location_id": 402,
       "message": "Sorry, I was in a hurry when leaving and picked up the wrong charging cable for you. Go and get it from the backpack over there.",
       "required_item": "",

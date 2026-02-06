@@ -19,7 +19,7 @@ This file is Copyright (c) 2026 CSC111 Teaching Team
 """
 from __future__ import annotations
 import json
-from typing import Optional, ClassVar
+from typing import Optional, ClassVar, Any
 
 from game_entities import Location, Item, NPC, Player
 from event_logger import Event, EventList
@@ -41,9 +41,8 @@ class AdventureGame:
 
     Representation Invariants:
         - self.max_moves > 0
-        - all(item.name in [i.name for i in self._items] for item in self.player.inventory)
-        - self.player.current_location_id in self._locations
-        - 0 <= self.player.moves_made <= self.max_moves
+        - self.player.current_location in self._locations
+        - 0 <= self.player.moves_left <= self.max_moves
     """
 
     # Private Instance Attributes (do NOT remove these two attributes):
@@ -51,10 +50,12 @@ class AdventureGame:
     #                       This represents all the locations in the game.
     #   - _items: a list of Item objects, representing all items in the game.
     #   - _npcs: some none human characters
+    #   - _puzzles: TODO:
 
     _locations: dict[int, Location]
     _items: list[Item]
     _npcs: list[NPC]
+    _puzzles: list[dict]
 
     player: Player
     ongoing: bool
@@ -81,7 +82,7 @@ class AdventureGame:
         # 2. Make sure the Item class is used to represent each item.
 
         # Suggested helper method (you can remove and load these differently if you wish to do so):
-        self._locations, self._items, self._npcs = self._load_game_data(game_data_file)
+        self._locations, self._items, self._npcs, self._puzzles = self._load_game_data(game_data_file)
 
         # Suggested attributes (you can remove and track these differently if you wish to do so):
         self.player = Player(initial_location_id, [], 0, self.max_moves)
@@ -89,28 +90,52 @@ class AdventureGame:
         self.ongoing = True
 
     @staticmethod
-    def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item], list[NPC]]:
-        """Load locations and items from a JSON file with the given filename and
-        return a tuple consisting of (1) a dictionary of locations mapping each game location's ID to a Location object,
-        and (2) a list of all Item objects."""
+    def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item], list[NPC], list[dict]]:
+        """Load locations, items, NPCs and puzzles from a JSON file with the given filename and
+                return a tuple consisting of (1) a dictionary of locations mapping each game location's ID to a
+                Location object, and (2) a list of all Item objects, (3) a list of all NPC objects,
+                (4) a list of all puzzles."""
+        data = AdventureGame._read_json(filename)
 
+        locations = AdventureGame._build_locations(data)
+        items = AdventureGame._build_items(data)
+        AdventureGame._validate_items_in_locations(locations, items)
+
+        npcs = AdventureGame._build_npcs(data)
+        puzzles = AdventureGame._build_puzzles(data)
+
+        return locations, items, npcs, puzzles
+
+    @staticmethod
+    def _read_json(filename: str) -> dict[str, Any]:
+        """TODO:"""
         with open(filename, 'r') as f:
-            data = json.load(f)  # This loads all the data from the JSON file
+            return json.load(f)
 
+    @staticmethod
+    def _build_locations(data: dict[str, Any]) -> dict[int, Location]:
+        """TODO:"""
         locations = {}
-        for loc_data in data['locations']:  # Go through each element associated with the 'locations' key in the file
+        for loc_data in data['locations']:
             location_obj = Location(loc_data['id'], loc_data['name'], loc_data['brief_description'],
                                     loc_data['long_description'],
                                     loc_data['available_commands'], loc_data['items'])
             locations[loc_data['id']] = location_obj
+        return locations
 
+    @staticmethod
+    def _build_items(data: dict[str, Any]) -> list[Item]:
+        """TODO:"""
         items = []
-        # Add Item objects to the items list; your code should be structured similarly to the loop above
-        # YOUR CODE BELOW
         for item_data in data['items']:
             item_obj = Item(item_data['name'], item_data.get('description', ''), item_data.get('start_position', 0),
                             item_data.get('target_position', 0), item_data.get('target_points', 0))
             items.append(item_obj)
+        return items
+
+    @staticmethod
+    def _validate_items_in_locations(locations: dict[int, Location], items: list[Item]) -> None:
+        """TODO:"""
         all_loc_items = set()
         for loc in locations.values():
             all_loc_items.update(AdventureGame.normalize_item_name(x) for x in loc.items)
@@ -119,14 +144,21 @@ class AdventureGame:
             if AdventureGame.normalize_item_name(itm.name) not in all_loc_items:
                 print(f"The item '{itm.name}' doesn't exist.")
 
+    @staticmethod
+    def _build_npcs(data: dict[str, Any]) -> list[NPC]:
+        """TODO:"""
         npcs = []
         for npc_data in data.get("NPC", []):
             npc = NPC(npc_data['name'], npc_data['location_id'], npc_data.get('message', ''),
                       npc_data.get('required_item', ''), npc_data.get('success_message', ''),
                       npc_data.get('given_hint', False))
             npcs.append(npc)
+        return npcs
 
-        return locations, items, npcs
+    @staticmethod
+    def _build_puzzles(data: dict[str, Any]) -> list[dict]:
+        """TODO:"""
+        return list(data.get("puzzles", []))
 
     def get_location(self, loc_id: Optional[int] = None) -> Location:
         """Return Location object associated with the provided location ID.
@@ -199,6 +231,21 @@ class AdventureGame:
         if actual_name is None:
             return f"You can't drop '{available_item}'. You don't have it yet."
 
+        puzzle = self._get_puzzle_here()
+        normalized = f"drop {self.normalize_item_name(actual_name)}"
+        if puzzle and normalized == puzzle["answer"]:
+            self.player.inventory.remove(actual_name)
+            self.player.moves_left -= 1
+            puzzle["solved"] = True
+            reward = puzzle["reward_item_name"]
+            if self.get_item(reward) is None:
+                return f"Puzzle reward '{reward}' is not a valid item."
+            self.player.inventory.append(reward)
+            return (
+                f"The student gratefully takes the {actual_name}.\n"
+                f"In return, he hands you a {reward}."
+            )
+
         self.player.inventory.remove(actual_name)
         curr_location.items.append(actual_name)
         self.player.moves_left -= 1
@@ -232,13 +279,17 @@ class AdventureGame:
         return None
 
     def location_format(self, loc: Location, visited: bool) -> str:
-        """Return a string representation of the location's description based on whether
-        it has been visited before.
-        """
+        """Return formatted location text; show long the first time, brief afterwards."""
         header = f"LOCATION {loc.id}\n"
         if visited:
-            return header + loc.brief_description
-        return header + loc.long_description
+            description = loc.brief_description
+        else:
+            description = loc.long_description
+
+        puzzle = self._get_puzzle_here()
+        if puzzle:
+            description += "\n\n" + puzzle["puzzle_prompt"]
+        return header + description
 
     def update_item_description(self, item_name: str, new_description: str) -> None:
         """Find the item and modify its description"""
@@ -267,7 +318,8 @@ class AdventureGame:
             "npcs": {
                 npc.name: npc.given_hint
                 for npc in self._npcs
-            }
+            },
+            "puzzles": self._puzzles
         }
         with open(filename, "w") as f:
             json.dump(state, f)
@@ -296,6 +348,7 @@ class AdventureGame:
         for npc in self._npcs:
             if npc.name in npc_flags:
                 npc.given_hint = npc_flags[npc.name]
+        self._puzzles = [dict(puzzle) for puzzle in state.get("puzzles", self._puzzles)]
         return "Game restored from file!"
 
     def _find_npc_here(self, npcs_name: str) -> NPC | None:
@@ -338,16 +391,31 @@ class AdventureGame:
         target = self.normalize_item_name(item_name)
         return any(self.normalize_item_name(x) == target for x in self.player.inventory)
 
+    def _get_puzzle_here(self) -> Optional[dict[str, Any]]:
+        """TODO:"""
+        for puzzle in self._puzzles:
+            if puzzle["location_id"] == self.player.current_location and not puzzle["solved"]:
+                return puzzle
+        return None
+
+    def can_move_to(self, next_loc_id: int) -> tuple[bool, str]:
+        """TODO:"""
+        if next_loc_id == 301 and not self.has_item("t-card"):
+            return False, "You need a T-Card to enter Robarts Library."
+        if next_loc_id == 101 and not self.has_item("room key"):
+            return False, "You need a room key to open your door."
+        return True, ""
+
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120,
+        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    })
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
     game = AdventureGame('game_data.json', 101)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "save", "restore", "quit"]  # Regular menu options available at each
@@ -435,15 +503,12 @@ if __name__ == "__main__":
                 executed = True
             elif choice in location.available_commands:
                 result = location.available_commands[choice]
-                if result == 301 and not game.has_item("t-card"):
-                    print("You need a T-Card to enter Robarts Library.")
-                    executed = True
-                elif result == 101 and not game.has_item("room key"):
-                    print("You need a room key to open your door.")
-                    executed = True
+                ok, msg = game.can_move_to(result)
+                if not ok:
+                    print(msg)
                 else:
                     game.player.move(result)
-                    executed = True
+                executed = True
             else:
                 print("That was an invalid option, please try again.")
                 continue
