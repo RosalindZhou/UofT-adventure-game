@@ -106,7 +106,7 @@
       "id": 611,
       "name": "Lab Room",
       "brief_description": "You are now in front of lab room",
-      "long_description": "You are now in the lab room. Some students are debugging.",
+      "long_description": "You are now in the lab room. The door lock is a semi-circular opening.Maybe we can put something on to open it?",
       "available_commands": {
         "go west": 311
       },
