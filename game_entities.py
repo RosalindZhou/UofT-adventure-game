@@ -193,6 +193,7 @@ class NPC:
     # etc.
 
 
+
 if __name__ == "__main__":
     pass
     # When you are ready to check your work with python_ta, uncomment the following lines.
