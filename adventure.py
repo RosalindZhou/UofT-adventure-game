@@ -229,6 +229,9 @@ class AdventureGame:
         return None
 
     def location_format(self, loc: Location, visited: bool) -> str:
+        """Return a string representation of the location's description based on whether 
+        it has been visited before.
+        """
         header = f"LOCATION {loc.id}\n"
         if visited:
             return header + loc.long_description
