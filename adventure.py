@@ -103,7 +103,8 @@ class AdventureGame:
 
         locations = {}
         for loc_data in data['locations']:  # Go through each element associated with the 'locations' key in the file
-            location_obj = Location(loc_data['id'], loc_data['name'], loc_data['brief_description'], loc_data['long_description'],
+            location_obj = Location(loc_data['id'], loc_data['name'], loc_data['brief_description'],
+                                    loc_data['long_description'],
                                     loc_data['available_commands'], loc_data['items'])
             locations[loc_data['id']] = location_obj
 
@@ -118,9 +119,9 @@ class AdventureGame:
         for loc in locations.values():
             all_loc_items.update(AdventureGame.normalize_item_name(x) for x in loc.items)
 
-        for item in items:
-            if AdventureGame.normalize_item_name(item.name) not in all_loc_items:
-                print(f"The item '{item.name}' doesn't exist.")
+        for itm in items:
+            if AdventureGame.normalize_item_name(itm.name) not in all_loc_items:
+                print(f"The item '{itm.name}' doesn't exist.")
         return locations, items
 
     def get_location(self, loc_id: Optional[int] = None) -> Location:
@@ -151,9 +152,9 @@ class AdventureGame:
     def get_item(self, name: str) -> Optional[Item]:
         """Return the Item object with the given name, or None if not found."""
         target = self.normalize_item_name(name)
-        for item in self._items:
-            if self.normalize_item_name(item.name) == target:
-                return item
+        for itm in self._items:
+            if self.normalize_item_name(itm.name) == target:
+                return itm
         return None
 
     def _find_in_location_items(self, location: Location, item: str) -> Optional[str]:
@@ -173,7 +174,7 @@ class AdventureGame:
         return None
 
     def take_item(self, item: str) -> str:
-        """Return a message about whether the item is available to to be taken."""
+        """Return a message about whether the item is available to be taken."""
         item = item.strip()
         if item == "":
             return "You did not enter an item."
@@ -229,7 +230,7 @@ class AdventureGame:
         return None
 
     def location_format(self, loc: Location, visited: bool) -> str:
-        """Return a string representation of the location's description based on whether 
+        """Return a string representation of the location's description based on whether
         it has been visited before.
         """
         header = f"LOCATION {loc.id}\n"
@@ -306,26 +307,26 @@ if __name__ == "__main__":
             print("You decided to:", choice)
 
             if choice in menu:
-            # TODO: Handle each menu command as appropriate
+                # TODO: Handle each menu command as appropriate
                 if choice == "log":
                     game_log.display_events()
-            # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
+                # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
                 elif choice == "look":
-                     print(location.long_description)
+                    print(location.long_description)
                 elif choice == "quit":
-                     game.ongoing = False
+                    game.ongoing = False
                 elif choice == "inventory":
-                     if game.inventory == []:
-                         print("Your inventory is empty.")
-                     else:
-                         print("You are carrying:")
-                         for item in game.inventory:
-                             print("-", item)
+                    if game.inventory == []:
+                        print("Your inventory is empty.")
+                    else:
+                        print("You are carrying:")
+                        for item in game.inventory:
+                            print("-", item)
                 elif choice == "score":
                     print("Your current score is", game.score)
                 executed = True
             elif choice in location.available_commands:
-            # Handle non-menu actions
+                # Handle non-menu actions
                 result = location.available_commands[choice]
                 game.current_location_id = result
                 game.moves_used += 1
