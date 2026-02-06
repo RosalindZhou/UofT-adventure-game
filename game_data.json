@@ -30,7 +30,7 @@
       "long_description": "The atmosphere changes here as you get closer to the engineering and physics buildings. To the West is the Bahen Centre, and to the East is the McLennan Physical Laboratories (MP).",
       "available_commands": {
         "go north": 11,
-        "go west": 6,
+        "go south": 6,
         "go east": 4
     },
       "items": []
@@ -44,7 +44,8 @@
       "available_commands": {
         "go south": 77,
         "go east": 603,
-        "go west": 602
+        "go west": 602,
+        "go north": 6
       },
       "items": ["toonie"]
     },
@@ -98,7 +99,7 @@
       "brief_description": "You are in the lecture room",
       "long_description": "You are now in the lecture room. There was a student who seemed to be looking for something.",
       "available_commands": {
-        "go east": 611
+        "go west": 611
       },
        "items": []
     },
@@ -117,7 +118,7 @@
       "id": 101,
       "name": "your dorm room",
       "brief_description": "This is your room in New College. It's messy but homey.",
-      "long_description": "You are in your dorm room. There's a desk with some items on it and a bed that hasn't been made in days. The only exit is South to the front desk area.",
+      "long_description": "You are in your dorm room. There's a desk with your T-card on it and a bed that hasn't been made in days.",
       "available_commands": {
         "go south": 102
       },
@@ -129,11 +130,12 @@
     {
       "id": 104,
       "name": "the door of Study Room",
-      "brief_description": "It's a Study room in your dorm, however, you cannot enter it even if you push very hard.",
-      "long_description": "You can see an upside-down note sticking on the door that says 'push'",
+      "brief_description": "You are standing in front of the Study room.",
+      "long_description": "You can see an upside-down note sticking on the door that says 'push'.It's a Study room in your dorm, however, you cannot enter it even if you push very hard.",
       "available_commands": {
         "push": 104,
-        "pull": 105
+        "pull": 105,
+        "go north": 103
       },
       "items": []
     },
@@ -141,7 +143,7 @@
       "id": 105,
       "name": "the Study Room",
       "brief_description": "You enter the quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive is left on the table",
+      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive is left on the table. You keep the door open.",
       "available_commands": {
         "go north": 103
       },
@@ -174,7 +176,7 @@
       "id": 1,
       "name": "outside New College",
       "brief_description": "You are standing in front of the New College building.",
-      "long_description": "Students are lounging on the nearby benches. Looking around, you see the main entrance leading into the building to the West.",
+      "long_description": "Students are lounging on the nearby benches. Looking around.",
       "available_commands": {
         "go west": 102,
         "go east": 10
