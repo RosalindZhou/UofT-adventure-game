@@ -61,7 +61,7 @@ class AdventureGame:
     deposited: set[str]
 
     max_moves: ClassVar[int] = 100
-    required_items: ClassVar[set[str]] = {"usb drive", "laptop charger", "lucky mug"}
+    required_items: ClassVar[set[str]] = {"usb drive", "laptop charger", "lucky mug", "a python reference book"}
 
     def __init__(self, game_data_file: str, initial_location_id: int) -> None:
         """
@@ -369,7 +369,7 @@ if __name__ == "__main__":
         location.visited = True
 
         # Display possible actions at this location
-        print("What to do? Choose from: look, inventory, score, log, quit, save, restore, take, drop")
+        print("What to do? Choose from: look, inventory, score, log, quit, save, restore, take, drop, talk to")
         print("At this location, you can also:")
         for action in location.available_commands:
             print("-", action)
