@@ -106,8 +106,13 @@ AdventureGame.game\_lost() method.\\AdventureGame.check\_end() method.\\
     % Copy-paste the above if you have more items, to list ALL items
 \end{enumerate}
 
-    \item Exact command(s) that should be used to pick up an item (choose any one or more items for this example), and the command(s) used to use/drop the item (can copy the list you assigned to \texttt{inventory\_demo} in the \texttt{simulation.py} file)
-    \item Which parts of your code (file, class, function/method) are involved in handling the \texttt{inventory} command:
+    \item Exact command(s) that should be used to pick up an item (choose any one or more items for this example), and the command(s) used to use/drop the item (can copy the list you assigned to \texttt{inventory\_demo} in the \texttt{simulation.py} file)\\
+    picking up item: take t-card, inventory, go south, inventory\\
+    dropping item: take t-card, drop t-card\\
+    \item Which parts of your code (file, class, function/method) are involved in handling the \texttt{inventory} command:\\
+AdventureGame Class: Located within adventure.py, this class serves as the central manager for the player's inventory, item management.\\
+AdventureGame.inventory: An instance attribute that stores the items currently held by the player.\\
+Main Game Loop: Within the while game.ongoing structure in adventure.py, a specific conditional branch exists: elif choice == "inventory". This block implements the logic to iterate through the game.inventory list and output each item name to the console when the user requests an inventory status update. \\
 \end{enumerate}
 
 \section*{Score}
