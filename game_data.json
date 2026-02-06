@@ -21,7 +21,7 @@
         "go north": 10,
         "go south": 12
       },
-      "items": []
+      "items": ["a bunch of flowers"]
     },
     {
       "id": 12,
@@ -370,7 +370,15 @@
       "start_position": 103,
       "target_position": 101,
       "target_points": 1
+    },
+    {
+      "name": "a bunch of flower",
+      "description": "It's a bunch of flower, maybe someone will like it.",
+      "start_position": 11,
+      "target_position": 402,
+      "target_points": 1
     }
+
   ],
   "NPC": [
     {
@@ -395,6 +403,22 @@
       "message": "If you lose your key, you can come to me~",
       "required_item": "",
       "success_message": "",
+      "given_hint": false
+    },
+    {
+      "name": "Professor Paul",
+      "location_id": 603,
+      "message": "Is this Project difficult or not?",
+      "required_item": "left note",
+      "success_message": "???execuse me????",
+      "given_hint": false
+    },
+    {
+      "name": "Professor Boris",
+      "location_id": 402,
+      "message": "Do you want a primary puzzle or secondary?",
+      "required_item": "a bunch of flower",
+      "success_message": "Oh! thank you!",
       "given_hint": false
     }
   ],
