@@ -4,7 +4,7 @@
       "id": 10,
       "name": "St. George Street (North)",
       "brief_description": "You are on the north end of St. George Street, near the library.",
-      "long_description": "To your East stands the massive, concrete form of Robarts Library. To your West stands the building of New college. The street continues South toward the heart of campus.",
+      "long_description": "You are on the north end of St. George Street. To your East stands the massive, concrete form of Robarts Library. To your West stands the building of New college. The street continues South toward the heart of campus.",
       "available_commands": {
         "go south": 11,
         "go west": 1,
@@ -164,7 +164,7 @@
       "id": 103,
       "name": "the Front Desk",
       "brief_description": "You are standing in front of New College front desk.",
-      "long_description": "This is the Front Desk. The staff were feeling drowsy.To the North is the lobby, and to the South is the study room.",
+      "long_description": "This is the Front Desk. The staff were feeling drowsy. To the North is the lobby, and to the South is the study room.",
       "available_commands": {
         "go north": 102,
         "go south": 104
@@ -397,5 +397,17 @@
       "success_message": "",
       "given_hint": false
     }
+  ]
+}
+{
+  "puzzles": [
+    {
+      "location_id": 611,
+      "puzzle_prompt": "You are in the Lab Room. A student nearby is looking for something and says, 'I just need something small and circular to unlock this...'",
+      "answer": "drop toonie",
+      "solved": false,
+      "reward_item_name": "python reference book"
+    },
+  
   ]
 }
