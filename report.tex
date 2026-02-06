@@ -32,19 +32,26 @@ Example game map below (edit it to show your actual game map):
 Starting location is: 101
 
 \section*{Game solution}
-List of commands:\\
-take t-card, go south, go south, take spare room key, go south, pull, take usb drive, go north, go north, go east, go east, go west, drop t-card, go north, go west, up, go east, go north, take lucky mug, talk to the cafeteria staff, go south, go west, down, go east, go north, go west, go south, go south, go east, go east, take left note, go north, take laptop charger, go south, go west, go west, go south, go south, take toonie, go east, go west, go west, up, go east, go east, drop toonie, take python reference book, go west, go west, down, go east, go north, go north, go north, go north, go west, go west, go north, drop usb drive, drop laptop charger, drop lucky mug, drop python reference book
+List of commands:
+\texttt{take t-card, go south, go south, take spare room key, go south, pull, take usb drive, go north, go north, go east, go east, go west, drop t-card, go north, go west, up, go east, go north, take lucky mug, talk to the cafeteria staff, go south, go west, down, go east, go north, go west, go south, go south, go east, go east, take left note, go north, take laptop charger, go south, go west, go west, go south, go south, take toonie, go west, up, go east, go east, drop toonie, take python reference book, go west, go west, down, go east, go north, go north, go north, go north, go west, go west, go north, drop usb drive, drop laptop charger, drop lucky mug, drop python reference book}\\
+
+
 
 \section*{Lose condition(s)}
 Description of how to lose the game: \\
 The player loses if they exceed the maximum move limit of 200 moves without returning all required items to their dorm room\\
 
 List of commands:\\
-repeat go south and go north for 101 times  
+Repeat the sequence \texttt{go south, go north} for 101 times (total of 202 moves).
 
-Which parts of your code are involved in this functionality:\\
-AdventureGame.moves\_used and AdventureGame.max\_moves.\\
-AdventureGame.game\_lost() method.\\AdventureGame.check\_end() method.\\
+Which parts of your code are involved in this functionality:
+\begin{itemize}
+    \item \texttt{AdventureGame.moves\_used}: Instance attribute tracking number of moves made
+    \item \texttt{AdventureGame.max\_moves}: Instance attribute set to 200, defining the move limit
+    \item \texttt{AdventureGame.game\_lost()}: Method that checks if \texttt{moves\_used >= max\_moves}
+    \item \texttt{AdventureGame.check\_end()}: Method that calls \texttt{game\_lost()} and ends game if true
+    \item Main game loop in \texttt{adventure.py}: Calls \texttt{check\_end()} after each executed action
+\end{itemize}
 
 % Copy-paste the above if you have multiple lose conditions and describe each possible way to lose the game
 
@@ -109,44 +116,134 @@ AdventureGame.game\_lost() method.\\AdventureGame.check\_end() method.\\
     \item Exact command(s) that should be used to pick up an item (choose any one or more items for this example), and the command(s) used to use/drop the item (can copy the list you assigned to \texttt{inventory\_demo} in the \texttt{simulation.py} file)\\
     picking up item: take t-card, inventory, go south, inventory\\
     dropping item: take t-card, drop t-card\\
-    \item Which parts of your code (file, class, function/method) are involved in handling the \texttt{inventory} command:\\
-AdventureGame Class: Located within adventure.py, this class serves as the central manager for the player's inventory, item management.\\
-AdventureGame.inventory: An instance attribute that stores the items currently held by the player.\\
-Main Game Loop: Within the while game.ongoing structure in adventure.py, a specific conditional branch exists: elif choice == "inventory". This block implements the logic to iterate through the game.inventory list and output each item name to the console when the user requests an inventory status update. \\
+    \item Which parts of your code (file, class, function/method) are involved in handling the \texttt{inventory} command:
+\begin{itemize}
+    \item \textbf{File}: \texttt{adventure.py}
+    \item \textbf{Class}: \texttt{AdventureGame}
+    \item \textbf{Attribute}: \texttt{AdventureGame.inventory} - A list storing item names currently held by the player
+    \item \textbf{Methods}:
+    \begin{itemize}
+        \item \texttt{take\_item(avail\_item: str)}: Adds items from location to player inventory
+        \item \texttt{drop\_item(avail\_item: str)}: Removes items from inventory and places at current location
+        \item \texttt{\_find\_in\_inventory(inv\_item: str)}: Helper to find items in inventory with normalized names
+    \end{itemize}
+    \item \textbf{Main game loop}: Contains conditional branch \texttt{elif choice == "inventory"} that iterates through \texttt{game.inventory} and prints each item name
+\end{itemize}
 \end{enumerate}
 
 \section*{Score}
 \begin{enumerate}
-
-    \item Briefly describe the way players can earn score in your game. Include the first location in which they can increase their score, and the exact list of command(s) leading up to the score increase:
-
+\item Briefly describe the way players can earn score in your game. Include the first location in which they can increase their score, and the exact list of command(s) leading up to the score increase:
+    
+    Players earn points by dropping items at their target locations. Each item has a specific target location ID and point value. When a player drops an item at its correct target location for the first time, they receive the associated points. Dropping the same item at the target location again does not award additional points.
+    
+    The first location where a player can increase their score is location 3 (outside Robarts Library) by dropping the t-card there, which awards 5 points.
+    
+    \textbf{Exact commands leading to first score increase:}
+    
+    \texttt{take t-card, go south, go east, go east, go east, drop t-card}
 
     \item Copy the list you assigned to \texttt{scores\_demo} in the \texttt{simulation.py} file into this section of the report:
-
+    
+    \texttt{scores\_demo = ["take t-card", "go south", "go east", "go east", "go east", "drop t-card", "score"]}
+    
+    \texttt{expected\_score\_log = [101, 101, 102, 1, 10, 3, 3, 3]}
 
     \item Which parts of your code (file, class, function/method) are involved in handling the \texttt{score} functionality:
+    
+    \textbf{File}: \texttt{adventure.py}
+    
+    \textbf{Class}: \texttt{AdventureGame}
+    
+    \textbf{Attributes}:
+    \begin{itemize}
+        \item \texttt{score}: Integer tracking the player's current score
+        \item \texttt{deposited}: Set of normalized item names that have been correctly placed
+    \end{itemize}
+    
+    \textbf{Methods}:
+    \begin{itemize}
+        \item \texttt{drop\_item(avail\_item: str)}: Checks if dropped item is at target location and awards points
+        \item \texttt{game\_won()}: Checks if all required items are deposited
+    \end{itemize}
+    
+    \textbf{File}: \texttt{game\_entities.py}
+    
+    \textbf{Class}: \texttt{Item}
+    
+    \textbf{Attributes}:
+    \begin{itemize}
+        \item \texttt{target\_position}: The location ID where item should be deposited
+        \item \texttt{target\_points}: Points awarded when item reaches target
+    \end{itemize}
 \end{enumerate}
 
 \section*{Enhancements}
 \begin{enumerate}
-    \item Describe your enhancement \#1 here
+    \item \textbf{Enhancement \#1: Save/Restore Game State}
     \begin{itemize}
-        \item Brief description of what the enhancement is (if it's a puzzle, also describe what steps the player must take to solve it):
-        \item Complexity level (choose from low/medium/high):
-        \item Reasons you believe this is the complexity level (e.g., mention implementation details, how much code did you have to add/change from the baseline, what challenges did you face, etc.)
-        \item Name the parts of the code which are involved in this enhancement
-        \item Copy the list you assigned to \texttt{enhancements\_demo} in the \texttt{simulation.py} file into this section of the report:
+        \item \textbf{Brief description:} 
+        
+        Players can save their current game progress to a JSON file using the \texttt{save} command and later restore it using the \texttt{restore} command. The save file stores: current location, inventory contents, score, moves used, deposited items set, and game ongoing status.
+        
+        \item \textbf{Complexity level:} Medium
+        
+        \item \textbf{Reasons for complexity level:}
+        
+        Implementation challenges included: identifying all critical game state attributes, converting the deposited set to/from JSON, handling file I/O with error handling, resetting EventList after restore, and integrating into the main game loop. Required approximately 30 lines of new code.
+        
+        \item \textbf{Code components:}
+        
+        \texttt{adventure.py}: \texttt{save\_game()}, \texttt{restore\_game()} methods, main game loop handling
+        
+        \texttt{simulation.py}: \texttt{generate\_events()} handles save/restore in simulations
+        
+        \item \textbf{Demo commands:}
+        
+        \texttt{save\_restore\_demo = ["take t-card", "go south", "go east", "go east", "go west", "drop t-card", "save", "go east", "restore"]}
     \end{itemize}
 
-    % Uncomment below section if you have more enhancements; copy-paste as needed
-    %\item Describe your enhancement here
-    %\begin{itemize}
-    %    \item Basic description of what the enhancement is:
-    %    \item Complexity level (low/medium/high):
-    %    \item Reasons you believe this is the complexity level (e.g., mention implementation details)
-    %    \item Name the parts of the code which are involved in this enhancement
-    %    \item Copy the list you assigned to \texttt{enhancements\_demo} in the \texttt{simulation.py} file into this section of the report:
-    %\end{itemize}
+    \item \textbf{Enhancement \#2: NPC Interactions}
+    \begin{itemize}
+        \item \textbf{Brief description:}
+        
+        Players can interact with NPCs using \texttt{talk to [NPC name]}. NPCs can require specific items before giving useful dialogue and remember if they've been talked to. Current NPCs: cafeteria staff (requires lucky mug) and classmates (explains laptop charger).
+        
+        \item \textbf{Complexity level:} Medium
+        
+        \item \textbf{Reasons for complexity level:}
+        
+        Required creating NPC dataclass, loading from JSON, name normalization, conditional dialogue system, state management, and integration into game loop. Approximately 60 lines of new code.
+        
+        \item \textbf{Code components:}
+        
+        \texttt{game\_entities.py}: \texttt{NPC} dataclass
+        
+        \texttt{adventure.py}: \texttt{\_find\_npc\_here()}, \texttt{talk\_to()} methods
+        
+        \texttt{game\_data.json}: NPC definitions
+        
+        \item \textbf{Demo:} Included in win walkthrough with \texttt{talk to the cafeteria staff}
+    \end{itemize}
+
+    \item \textbf{Enhancement \#3: Puzzle - Study Room Door}
+    \begin{itemize}
+        \item \textbf{Brief description:}
+        
+        At location 104, players see an upside-down note saying "push". The \texttt{push} command doesn't work - players must realize the note is upside-down and use \texttt{pull} instead to access the study room and get the USB drive.
+        
+        \item \textbf{Complexity level:} Low
+        
+        \item \textbf{Reasons for complexity level:}
+        
+        Simple environmental puzzle using only existing location system. No new code required - implemented purely through JSON structure with clever use of available\_commands.
+        
+        \item \textbf{Code components:}
+        
+        \texttt{game\_data.json}: Location 104 with available\_commands \{"push": 104, "pull": 105\}
+        
+        \item \textbf{Demo:} In win walkthrough: \texttt{go south} (to 104), \texttt{pull}, \texttt{take usb drive}
+    \end{itemize}
 \end{enumerate}
 
 
