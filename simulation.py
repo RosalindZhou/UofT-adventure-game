@@ -72,6 +72,9 @@ class AdventureGameSimulation:
             elif cmd.startswith("drop "):
                 item = cmd[5:].strip()
                 self._game.drop_item(item)
+            elif cmd.startswith("talk to "):
+                npc_name = cmd[8:].strip()
+                self._game.talk_to(npc_name)
             elif cmd in {"look", "inventory", "score", "log", "quit"}:
                 pass
             else:
@@ -131,7 +134,7 @@ if __name__ == "__main__":
                        "go east",  # 311
                        "go north",  # 314
                        "take lucky mug",  # 314
-                       "talk to The cafeteria staff",  # 314
+                       "talk to the cafeteria staff",  # 314
                        "go south",  # 311
                        "go west",  # 312
                        "down",  # 302

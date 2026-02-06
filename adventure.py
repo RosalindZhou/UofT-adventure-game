@@ -21,7 +21,7 @@ from __future__ import annotations
 import json
 from typing import Optional
 
-from game_entities import Location, Item
+from game_entities import Location, Item, NPC
 from event_logger import Event, EventList
 
 
@@ -50,9 +50,11 @@ class AdventureGame:
     #   - _locations: a mapping from location id to Location object.
     #                       This represents all the locations in the game.
     #   - _items: a list of Item objects, representing all items in the game.
+    #   - _npcs: TODO: handle these instance attributes
 
     _locations: dict[int, Location]
     _items: list[Item]
+    _npcs: list[NPC]
     current_location_id: int  # Suggested attribute, can be removed
     ongoing: bool  # Suggested attribute, can be removed
     inventory: list[str]
@@ -81,7 +83,7 @@ class AdventureGame:
         # 2. Make sure the Item class is used to represent each item.
 
         # Suggested helper method (you can remove and load these differently if you wish to do so):
-        self._locations, self._items = self._load_game_data(game_data_file)
+        self._locations, self._items, self._npcs = self._load_game_data(game_data_file)
 
         # Suggested attributes (you can remove and track these differently if you wish to do so):
         self.current_location_id = initial_location_id  # game begins at this location
@@ -110,7 +112,7 @@ class AdventureGame:
         items = []
         # TODO: Add Item objects to the items list; your code should be structured similarly to the loop above
         # YOUR CODE BELOW
-        for item_data in data["items"]:
+        for item_data in data['items']:
             item_obj = Item(item_data['name'], item_data['description'], item_data['start_position'],
                             item_data['target_position'], item_data['target_points'])
             items.append(item_obj)
@@ -121,7 +123,14 @@ class AdventureGame:
         for item in items:
             if AdventureGame.normalize_item_name(item.name) not in all_loc_items:
                 print(f"The item '{item.name}' doesn't exist.")
-        return locations, items
+
+        npcs = []
+        for npc_data in data['NPC']:
+            npc = NPC(npc_data['name'], npc_data['location_id'], npc_data.get['message'],
+                      npc_data['required_item'], npc_data['success_message'], npc_data['given_hint'] )
+            npcs.append(npc)
+
+        return locations, items, npcs
 
     def get_location(self, loc_id: Optional[int] = None) -> Location:
         """Return Location object associated with the provided location ID.
@@ -241,6 +250,40 @@ class AdventureGame:
         if item_obj:
             item_obj.description = new_description
 
+    def _find_npc_here(self, npc_name: str) -> NPC | None:
+        """Return the NPC with this name at the current location, if there is no such NPC, return None."""
+        target_npc = self.normalize_item_name(npc_name)
+        for npc in self._npcs:
+            if npc.location_id == self.current_location_id and self.normalize_item_name(npc.name) == target_npc:
+                return npc
+        return None
+
+    def talk_to(self, npc_name: str) -> str:
+        """Interact with the NPC at the current location."""
+        npc_name = npc_name.strip()
+        if npc_name == "":
+            return "Who do you want to talk to?"
+
+        npc = self._find_npc_here(npc_name)
+        if npc is None:
+            return f"There is no one here named '{npc_name}'."
+
+        if npc.given_hint:
+            return f"{npc.name}: We've already talked."
+
+        if npc.required_item:
+            required_item = self.normalize_item_name(npc.required_item)
+            have_it = any(self.normalize_item_name(x) == required_item for x in self.inventory)
+            if not have_it:
+                return f"{npc.name}: {npc.message}"
+
+            npc.given_hint = True
+            if npc.success_message:
+                return f"{npc.name}: {npc.success_message}"
+            return f"{npc.name}: Thanks!"
+        else:
+            npc.given_hint = True
+            return f"{npc.name}: {npc.message}"
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
@@ -291,6 +334,12 @@ if __name__ == "__main__":
         elif choice.startswith("drop "):
             item = choice[5:]
             message = game.drop_item(item)
+            print(message)
+            executed = True
+
+        elif choice.startswith("talk to "):
+            npc_name = choice[8:]
+            message = game.talk_to(npc_name)
             print(message)
             executed = True
 
