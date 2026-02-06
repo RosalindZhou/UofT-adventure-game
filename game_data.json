@@ -321,6 +321,13 @@
       "target_points": 5
     },
     {
+      "name": "a python reference book",
+      "description": "There is a python reference book left by someone, maybe we can have a look?",
+      "start_position": 611,
+      "target_position": 101,
+      "target_points": 5
+    },
+    {
       "name": "t-card",
       "description": "Your University of Toronto T-Card. Essential for library access.",
       "start_position": 101,
