@@ -165,12 +165,12 @@
       "id": 103,
       "name": "the Front Desk",
       "brief_description": "You are standing in front of New College front desk.",
-      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the lobby, and to the South is the study room.",
+      "long_description": "This is the Front Desk. The staff were feeling drowsy.To the North is the lobby, and to the South is the study room.",
       "available_commands": {
         "go north": 102,
         "go south": 104
       },
-      "items": ["spare room key"]
+      "items": ["room key"]
     },
     {
       "id": 1,
