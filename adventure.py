@@ -237,9 +237,8 @@ class AdventureGame:
         """
         header = f"LOCATION {loc.id}\n"
         if visited:
-            return header + loc.long_description
-        else:
             return header + loc.brief_description
+        return header + loc.long_description
 
     def update_item_description(self, item_name: str, new_description: str) -> None:
         """Find the item and modify its description"""
