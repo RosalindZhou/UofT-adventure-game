@@ -153,7 +153,7 @@
       "id": 102,
       "name": "New College Lobby",
       "brief_description": "You are in the bustling New College Lobby.",
-      "long_description": "The lobby is busy with students. From here, you can head East to go back outside, South toward the Front Desk, or North to the Study Room.",
+      "long_description": "The lobby is busy with students. From here, you can head East to go outside, South toward the Front Desk, or North to your own Room.",
       "available_commands": {
         "go east": 1,
         "go north": 101,
@@ -164,8 +164,8 @@
     {
       "id": 103,
       "name": "the Front Desk",
-      "brief_description": "You are at the New College front desk.",
-      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the corridor leading to the dorm room, and to the South is the study room.",
+      "brief_description": "You are standing in front of New College front desk.",
+      "long_description": "This is the Front Desk. They have a Lost and Found here. And it is the place to look if you lose your room key. To the North is the lobby, and to the South is the study room.",
       "available_commands": {
         "go north": 102,
         "go south": 104
