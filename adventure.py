@@ -263,38 +263,45 @@ class AdventureGame:
         current_event = curr_game_log.last
         cmd = current_event.prev_command
 
-        # 2. Reverse the logic based on the command type
+        # 2. Use a helper to reverse item logic (fixes nesting error)
         if cmd:
-            if cmd.startswith("take "):
-                item_name = cmd[5:].strip()
-                actual_name = self._find_in_inventory(item_name)
-                if actual_name:
-                    self.inventory.remove(actual_name)
-                    self.get_location().items.append(actual_name)
-
-            elif cmd.startswith("drop "):
-                item_name = cmd[5:].strip()
-                actual_name = self._find_in_location_items(self.get_location(), item_name)
-                if actual_name:
-                    self.get_location().items.remove(actual_name)
-                    self.inventory.append(actual_name)
-                    # Revert score if the item was dropped at target
-                    norm_name = self.normalize_item_name(actual_name)
-                    if norm_name in self.deposited:
-                        item_obj = self.get_item(actual_name)
-                        if item_obj:
-                            self.score -= item_obj.target_points
-                            self.deposited.remove(norm_name)
+            self._revert_item_state(cmd)
 
         # 3. Remove the state from the linked list
         curr_game_log.remove_last_event()
 
-        # 4. Move player back to the new 'last' event ID
+        # 4. Move player back to the previous event ID
         self.current_location_id = curr_game_log.last.id_num
         if self.moves_used > 0:
             self.moves_used -= 1
 
         return f"Undone! You are back at: {self.get_location().name}"
+
+    def _revert_item_state(self, cmd: str) -> None:
+        """Helper to reverse changes to inventory and score based on the command."""
+        if cmd.startswith("take "):
+            item_name = cmd[5:].strip()
+            actual_name = self._find_in_inventory(item_name)
+            if actual_name:
+                self.inventory.remove(actual_name)
+                self.get_location().items.append(actual_name)
+
+        elif cmd.startswith("drop "):
+            item_name = cmd[5:].strip()
+            actual_name = self._find_in_location_items(self.get_location(), item_name)
+            if actual_name:
+                self._reverse_drop(actual_name)
+
+    def _reverse_drop(self, actual_name: str) -> None:
+        """Helper to specifically reverse a drop action."""
+        self.get_location().items.remove(actual_name)
+        self.inventory.append(actual_name)
+        norm_name = self.normalize_item_name(actual_name)
+        if norm_name in self.deposited:
+            item_obj = self.get_item(actual_name)
+            if item_obj:
+                self.score -= item_obj.target_points
+                self.deposited.remove(norm_name)
 
     def save_game(self, filename: str = "savegame.json") -> str:
         """Serializes the core game state into a JSON file."""
