@@ -369,7 +369,7 @@ if __name__ == "__main__":
         location.visited = True
 
         # Display possible actions at this location
-        print("What to do? Choose from: look, inventory, score, log, quit, save, restore")
+        print("What to do? Choose from: look, inventory, score, log, quit, save, restore, take, drop")
         print("At this location, you can also:")
         for action in location.available_commands:
             print("-", action)
