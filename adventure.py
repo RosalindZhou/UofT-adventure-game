@@ -61,7 +61,7 @@ class AdventureGame:
     deposited: set[str]
 
     max_moves: ClassVar[int] = 100
-    required_items: ClassVar[set[str]] = {"usb drive", "laptop charger", "lucky mug"}
+    required_items: ClassVar[set[str]] = {"usb drive", "laptop charger", "lucky mug", "a python reference book"}
 
     def __init__(self, game_data_file: str, initial_location_id: int) -> None:
         """
