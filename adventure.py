@@ -325,23 +325,23 @@ class AdventureGame:
         except FileNotFoundError:
             return "No save file found."
 
-    def _find_npc_here(self, npc_name: str) -> NPC | None:
+    def _find_npc_here(self, npcs_name: str) -> NPC | None:
         """Return the NPC with this name at the current location, if there is no such NPC, return None."""
-        target_npc = self.normalize_item_name(npc_name)
+        target_npc = self.normalize_item_name(npcs_name)
         for npc in self._npcs:
             if npc.location_id == self.current_location_id and self.normalize_item_name(npc.name) == target_npc:
                 return npc
         return None
 
-    def talk_to(self, npc_name: str) -> str:
+    def talk_to(self, npcs_name: str) -> str:
         """Interact with the NPC at the current location."""
-        npc_name = npc_name.strip()
-        if npc_name == "":
+        npcs_name = npcs_name.strip()
+        if npcs_name == "":
             return "Who do you want to talk to?"
 
-        npc = self._find_npc_here(npc_name)
+        npc = self._find_npc_here(npcs_name)
         if npc is None:
-            return f"There is no one here named '{npc_name}'."
+            return f"There is no one here named '{npcs_name}'."
 
         if npc.given_hint:
             return f"{npc.name}: We've already talked."
@@ -365,12 +365,12 @@ if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    #
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
-    # })
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 120,
+        'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
+    })
 
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
     game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
