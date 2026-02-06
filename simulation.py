@@ -129,15 +129,15 @@ if __name__ == "__main__":
     # provide a walkthrough of commands needed to win and lose the game
     win_walkthrough = ["take t-card", "go south", "go south", "take spare room key", "go south", "pull",
                        "take usb drive", "go north", "go north", "go east", "go east", "go west",
-                       "drop t-card",  # Drop at ID 3 (Target)
+                       "drop t-card",  # Drop at ID 3
                        "go north", "go west", "up", "go east", "go north", "take lucky mug",
                        "talk to the cafeteria staff", "go south", "go west", "down", "go east",
                        "go north", "go west", "go south", "go south", "go east", "go east",
                        "take left note", "go north", "take laptop charger", "go south", "go west",
                        "go west", "go south", "go south", "take toonie", "go east",
                        "talk to Professor Paul He", "go west", "go west", "up", "go east",
-                       "go east",  # Move to 613 (Lecture Room)
-                       "drop toonie",  # Drop at ID 613 (Target)
+                       "go east",  # Move to 613
+                       "drop toonie", "take python reference book",  # Drop at ID 613
                        "go west", "go west", "down", "go east", "go north", "go north", "go north",
                        "go north", "go west", "go west", "go north",
                        "drop usb drive", "drop laptop charger", "drop lucky mug", "drop python reference book"
@@ -153,7 +153,7 @@ if __name__ == "__main__":
                         402, 402,  # go north, take charger
                         401, 4, 12, 6, 601, 601,  # move 601, take toonie
                         603, 603,  # talk to Paul
-                        601, 602, 612, 611, 613, 613,  # move 611 (book), move 613, drop toonie
+                        601, 602, 612, 611, 613, 613, 613,  # move 611, move 613, drop toonie
                         612, 602, 601, 6, 12, 11, 10, 1, 102, 101,  # back to dorm
                         101, 101, 101, 101  # 4 final drops at 101
                         ]  # Update this log list to include the IDs of all locations that would be visited
