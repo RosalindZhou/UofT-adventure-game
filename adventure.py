@@ -333,6 +333,10 @@ class AdventureGame:
             npc.given_hint = True
             return f"{npc.name}: {npc.message}"
 
+    def _has_item(self, item_name: str) -> bool:
+        target = self.normalize_item_name(item_name)
+        return any(self.normalize_item_name(x) == target for x in self.player.inventory)
+
 
 if __name__ == "__main__":
     # When you are ready to check your work with python_ta, uncomment the following lines.
@@ -429,10 +433,13 @@ if __name__ == "__main__":
                     print("Your current score is", game.player.score)
                 executed = True
             elif choice in location.available_commands:
-                # Handle non-menu actions
                 result = location.available_commands[choice]
-                game.player.move(result)
-                executed = True
+                if result == 3 and not game._has_item("t-card"):
+                    print("You need a T-Card to enter Robarts Library.")
+                    executed = True
+                else:
+                    game.player.move(result)
+                    executed = True
             else:
                 print("That was an invalid option, please try again.")
                 continue
