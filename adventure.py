@@ -345,7 +345,7 @@ if __name__ == "__main__":
     #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
     # })
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
-    game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
+    game = AdventureGame('game_data.json', 101)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "log", "save", "restore", "quit"]  # Regular menu options available at each
     # location
     choice = None
