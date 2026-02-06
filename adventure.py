@@ -336,15 +336,14 @@ if __name__ == "__main__":
     # (Delete the "#" and space before each line.)
     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
     # import python_ta
-    #
     # python_ta.check_all(config={
     #     'max-line-length': 120,
     #     'disable': ['R1705', 'E9998', 'E9999', 'static_type_checker']
     # })
-
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
     game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
-    menu = ["look", "inventory", "score", "log", "save", "restore", "quit"]  # Regular menu options available at each location
+    menu = ["look", "inventory", "score", "log", "save", "restore", "quit"]  # Regular menu options available at each
+    # location
     choice = None
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
