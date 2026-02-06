@@ -16,7 +16,7 @@
       "id": 11,
       "name": "St. George Street (Middle)",
       "brief_description": "You are in the middle of St. George Street.",
-      "long_description": "You are standing at the busy intersection in the middle of campus. To the West is the path leading to New College. You can see the street extending both North and South.",
+      "long_description": "You are standing at the busy intersection in the middle of campus. To the West is the path leading to New College. You can see the street extending both North and South.And there is a bunch of flower lying on the ground.",
       "available_commands": {
         "go north": 10,
         "go south": 12
@@ -142,7 +142,7 @@
       "id": 105,
       "name": "the Study Room",
       "brief_description": "You enter the quiet study room in New College.",
-      "long_description": "This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive left on the table. You keep the door open.",
+      "long_description": "Have you been tricked by the note at the door? Hahaha.This study room is filled with carrels and heavy silence. You see a computer terminal in the corner. You see your usb drive left on the table. You keep the door open.",
       "available_commands": {
         "go north": 103
       },
@@ -368,9 +368,17 @@
       "name": "room key",
       "description": "It's a spare room key, you can use it to open your room.",
       "start_position": 103,
-      "target_position": 101,
+      "target_position": 603,
+      "target_points": 1
+    },
+    {
+      "name": "a bunch of flower",
+      "description": "It's a bunch of flower, maybe someone will like it.",
+      "start_position": 11,
+      "target_position": 402,
       "target_points": 1
     }
+
   ],
   "NPC": [
     {
@@ -405,6 +413,22 @@
       "answer": "drop toonie",
       "solved": false,
       "reward_item_name": "python reference book"
+    },
+    {
+      "name": "Professor Paul",
+      "location_id": 603,
+      "message": "Is this Project difficult or not?",
+      "required_item": "left note",
+      "success_message": "???execuse me????",
+      "given_hint": false
+    },
+    {
+      "name": "Professor Boris",
+      "location_id": 402,
+      "message": "Do you want a primary puzzle or secondary?",
+      "required_item": "a bunch of flower",
+      "success_message": "Oh! thank you!",
+      "given_hint": false
     }
   ]
 }
